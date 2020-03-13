@@ -18,7 +18,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     public void initialisieren(){
         for(int x = 36; x > 0; x++) {
             if(x == 1){
-                
+
             }
             feldListe.add(new Feld());
         }
