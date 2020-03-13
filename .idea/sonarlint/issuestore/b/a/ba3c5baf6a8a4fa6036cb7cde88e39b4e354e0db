@@ -1,0 +1,6 @@
+
+Psquid:S1135G"2Complete the task associated to this TODO comment.(‘±¿8ÂçÜŒ.
+psquid:UselessImportCheck"@Remove this unused import 'de.ostfalia.prog.ss20.figuren.Figur'.(õåÆ„şÿÿÿÿ8¦ãÖŒ.
+Lsquid:S2140")Use "java.util.Random.nextInt()" instead.(ï›´Ÿşÿÿÿÿ8»®ŸœŒ.
+¤squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(»¾ÌÃıÿÿÿÿ8ûüËŸŒ.
+Ksquid:S1068"-Remove this unused "feldListe" private field.(ò¶Í¾8„©ÉŸŒ.

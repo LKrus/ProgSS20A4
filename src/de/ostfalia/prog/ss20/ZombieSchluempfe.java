@@ -16,7 +16,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     private List<Spieler> spielerListe = new ArrayList<>();
 
     public void initialisieren(){
-        
+        for(int x = 36; x > 0; x++) {
+            if(x == 1){
+                
+            }
+            feldListe.add(new Feld());
+        }
     }
 
     public List<Spieler> getSpielerListe() {

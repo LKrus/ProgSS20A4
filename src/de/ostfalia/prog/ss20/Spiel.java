@@ -14,8 +14,8 @@ public class Spiel {
 
         /*
         abfragen wie viele spieler
-        conf einlesen
-        spielbrett erstellen?
+        (conf einlesen)
+        spielbrett erstellen
         speiler erstellen
         figuren setzen
 
