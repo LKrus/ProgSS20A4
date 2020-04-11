@@ -5,7 +5,7 @@ import de.ostfalia.prog.ss20.figuren.Schlumpf;
 import java.util.List;
 
 public class Spezialfeld extends Feld {
-    public Spezialfeld(int nummer, List<Feld> nachbarListe, List<Schlumpf> figurListe) {
-        super(nummer, nachbarListe, figurListe);
+    public Spezialfeld(int nummer) {
+        super(nummer);
     }
 }

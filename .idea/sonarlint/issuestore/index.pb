@@ -31,3 +31,5 @@ Z
 *src/de/ostfalia/prog/ss20/felder/Feld.java,d\0\d03d7fd862693b9dad4e6d3bf23f8f8167032074
 _
 /src/de/ostfalia/prog/ss20/ZombieSchluempfe.java,b\a\ba3c5baf6a8a4fa6036cb7cde88e39b4e354e0db
+`
+0src/de/ostfalia/prog/ss20/test/Aufgabe1Test.java,d\b\db973d1924c9169784610a49440877b4e491b084

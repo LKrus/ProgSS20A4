@@ -2,7 +2,7 @@ package de.ostfalia.prog.ss20;
 
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
-import de.ostfalia.prog.ss20.felder.Feld;
+import de.ostfalia.prog.ss20.felder.*;
 import de.ostfalia.prog.ss20.figuren.Figur;
 import de.ostfalia.prog.ss20.figuren.Schlumpf;
 import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
@@ -16,11 +16,116 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     private List<Spieler> spielerListe = new ArrayList<>();
 
     public void initialisieren(){
-        for(int x = 36; x > 0; x++) {
-            if(x == 1){
 
+        List<Feld> felder = new ArrayList<>();
+        List<Feld> nachbarFelder = new ArrayList<>();
+
+        for(int x = 36; x >= 0; x--) {
+            // Felder erstellen (Standard-Konstruktor, ohne Werte, außer Feld-Nummer) (Aufpassen, welche Felder wichtig sind)
+            // Nach Erstellung: Hinzufügen der NAchbarfelder (tw. HardCode, tw. Vereinfachen)
+            // Start-Feld hinzufügen
+
+            switch(x) {
+                case 0:
+                    //Startfeld
+                    felder.add(new Startfeld(x));
+                    break;
+                case 11:
+                    //Tuberose
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 16:
+                    //Fluss
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 17:
+                    //Fluss
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 25:
+                    //Fluss
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 26:
+                    //Fluss
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 27:
+                    //Fluss
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 24:
+                    //Pilz
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 29:
+                    //Docs Labor
+                    felder.add(new Spezialfeld(x));
+                    break;
+                case 36:
+                    //Dorf
+                    felder.add(new Zielfeld(x));
+                    break;
+                default:
+                    felder.add(new Normalfeld(x));
+                    break;
             }
-            feldListe.add(new Feld());
+        }
+
+        for (Feld feld: felder) {
+            switch(feld.getNummer()){
+                case 3:
+                    for (Feld feld2: felder){
+                        if(feld2.getNummer() == 4 || feld2.getNummer() == 8){
+                            feld.getNachbarListe().add(feld2);
+                        }
+                    }
+                    feld.setIstAbzweigung(true);
+                    break;
+                case 7:
+                    for (Feld feld2: felder){
+                        if(feld2.getNummer() == 15){
+                            feld.getNachbarListe().add(feld2);
+                        }
+                    }
+                    break;
+                case 14:
+                    for (Feld feld2: felder){
+                        if(feld2.getNummer() == 15){
+                            feld.getNachbarListe().add(feld2);
+                        }
+                    }
+                    break;
+                case 31:
+                    for (Feld feld2: felder){
+                        if(feld2.getNummer() == 32 || feld2.getNummer() == 36){
+                            feld.getNachbarListe().add(feld2);
+                        }
+                    }
+                    feld.setIstAbzweigung(true);
+                    break;
+                case 35:
+                    for (Feld feld2: felder){
+                        if(feld2.getNummer() == 1){
+                            feld.getNachbarListe().add(feld2);
+                        }
+                    }
+                    break;
+                default:
+                    for (Feld feld2: felder){
+                        if(feld2.getNummer() == feld.getNummer() + 1){
+                            feld.getNachbarListe().add(feld2);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        for(Feld feld: felder){
+            System.out.print("\nFeld " + feld.getNummer() + " : ");
+            for(Feld nachbar: feld.getNachbarListe()){
+                System.out.print(nachbar.getNummer() + " ");
+            }
         }
     }
 
@@ -40,6 +145,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         for (Farbe farbe : farben) {
             spielerListe.add(new Spieler(farbe));
         }
+
+        initialisieren();
 
     }
 

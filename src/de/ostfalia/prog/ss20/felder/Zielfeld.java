@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Zielfeld extends Spezialfeld {
 
-    public Zielfeld(int nummer, List<Feld> nachbarListe, List<Schlumpf> figurListe) {
-        super(nummer, nachbarListe, figurListe);
+    public Zielfeld(int nummer) {
+        super(nummer);
     }
 }
