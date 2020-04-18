@@ -16,19 +16,21 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     private List<Feld> feldListe = new ArrayList<>();
     private List<Spieler> spielerListe = new ArrayList<>();
+    Fliege fliege;
+    Doc doc;
 
-    public void initialisieren(){
+    public void initialisieren() {
 
 
         List<Feld> felder = new ArrayList<>();
         List<Feld> nachbarFelder = new ArrayList<>();
 
-        for(int x = 36; x >= 0; x--) {
+        for (int x = 36; x >= 0; x--) {
             // Felder erstellen (Standard-Konstruktor, ohne Werte, außer Feld-Nummer) (Aufpassen, welche Felder wichtig sind)
             // Nach Erstellung: Hinzufügen der NAchbarfelder (tw. HardCode, tw. Vereinfachen)
             // Start-Feld hinzufügen
 
-            switch(x) {
+            switch (x) {
                 case 0:
                     //Startfeld
                     felder.add(new Startfeld(x));
@@ -75,48 +77,48 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
 
-        for (Feld feld: felder) {
-            switch(feld.getNummer()){
+        for (Feld feld : felder) {
+            switch (feld.getNummer()) {
                 case 3:
-                    for (Feld feld2: felder){
-                        if(feld2.getNummer() == 4 || feld2.getNummer() == 8){
+                    for (Feld feld2 : felder) {
+                        if (feld2.getNummer() == 4 || feld2.getNummer() == 8) {
                             feld.getNachbarListe().add(feld2);
                         }
                     }
                     feld.setIstAbzweigung(true);
                     break;
                 case 7:
-                    for (Feld feld2: felder){
-                        if(feld2.getNummer() == 15){
+                    for (Feld feld2 : felder) {
+                        if (feld2.getNummer() == 15) {
                             feld.getNachbarListe().add(feld2);
                         }
                     }
                     break;
                 case 14:
-                    for (Feld feld2: felder){
-                        if(feld2.getNummer() == 15){
+                    for (Feld feld2 : felder) {
+                        if (feld2.getNummer() == 15) {
                             feld.getNachbarListe().add(feld2);
                         }
                     }
                     break;
                 case 31:
-                    for (Feld feld2: felder){
-                        if(feld2.getNummer() == 32 || feld2.getNummer() == 36){
+                    for (Feld feld2 : felder) {
+                        if (feld2.getNummer() == 32 || feld2.getNummer() == 36) {
                             feld.getNachbarListe().add(feld2);
                         }
                     }
                     feld.setIstAbzweigung(true);
                     break;
                 case 35:
-                    for (Feld feld2: felder){
-                        if(feld2.getNummer() == 1){
+                    for (Feld feld2 : felder) {
+                        if (feld2.getNummer() == 1) {
                             feld.getNachbarListe().add(feld2);
                         }
                     }
                     break;
                 default:
-                    for (Feld feld2: felder){
-                        if(feld2.getNummer() == feld.getNummer() + 1){
+                    for (Feld feld2 : felder) {
+                        if (feld2.getNummer() == feld.getNummer() + 1) {
                             feld.getNachbarListe().add(feld2);
                         }
                     }
@@ -124,9 +126,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
 
-        for(Feld feld: felder){
+        for (Feld feld : felder) {
             System.out.print("\nFeld " + feld.getNummer() + " : ");
-            for(Feld nachbar: feld.getNachbarListe()){
+            for (Feld nachbar : feld.getNachbarListe()) {
                 System.out.print(nachbar.getNummer() + " ");
             }
         }
@@ -151,8 +153,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
 
 
-        Doc doc = new Doc("Doc", 29);
-        Fliege fliege = new Fliege("Fliege", 20);
+        doc = new Doc("Doc", 29);
+        fliege = new Fliege("Fliege", 20);
 
         initialisieren();
 
@@ -165,16 +167,16 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             spielerListe.add(new Spieler(farbe));
         }
 
-        Doc doc = new Doc("Doc", 29);
-        Fliege fliege = new Fliege("Fliege", 20);
+        doc = new Doc("Doc", 29);
+        fliege = new Fliege("Fliege", 20);
 
         /*
         conf aufspalten
          */
 
         String[] confs = conf.split(", ");
-        for(String config : confs){
-            String name = config.substring(0,config.indexOf(":"));
+        for (String config : confs) {
+            String name = config.substring(0, config.indexOf(":"));
             int feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
             System.out.println(name + ": " + feld);
         }
@@ -187,11 +189,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
 
-
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl, Richtung richtung) {
 
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                if (schlumpf.getName().equals(figurName)) {
 
+
+                    return true;
+                }
+            }
+        }
         // spieler rausfinden über figurname(ROT/ BLAU/...)
         //spieler.getschlupflist
         //Figur finden
@@ -202,16 +211,24 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
-
         for (Spieler spieler : spielerListe) {
             for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                 if (schlumpf.getName().equals(figurName)) {
-                    schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld()+augenzahl);
+                    for (int i = 1; i <= augenzahl; i++) {
+                        schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + i); //zieht feld für feld
+
+                        //pro feld statusveränderungen anpassen:
+                        if (schlumpf.getAktuellesFeld() == fliege.getFliegeAktuellesFeld()) {
+                            schlumpf.setIstZombie(true);
+                        }
+                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
+                            schlumpf.setIstZombie(false);
+                        }
+                    }
                     return true;
                 }
             }
         }
-
         return false;
     }
 
