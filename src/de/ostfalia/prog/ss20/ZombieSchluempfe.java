@@ -18,12 +18,14 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     private List<Spieler> spielerListe = new ArrayList<>();
     Fliege fliege;
     Doc doc;
+    Zielfeld zielfeld;
 
     public void initialisieren() {
 
 
         List<Feld> felder = new ArrayList<>();
         List<Feld> nachbarFelder = new ArrayList<>();
+        zielfeld = new Zielfeld(36); // TODO: 18.04.2020 in spielfeld logik einbauen?
 
         for (int x = 36; x >= 0; x--) {
             // Felder erstellen (Standard-Konstruktor, ohne Werte, außer Feld-Nummer) (Aufpassen, welche Felder wichtig sind)
@@ -167,13 +169,13 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         //conf aufspalten:
         String[] confs = conf.split(", ");
-        for(String config : confs){
-            String configName = config.substring(0,config.indexOf(":"));
+        for (String config : confs) {
+            String configName = config.substring(0, config.indexOf(":"));
             int feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
 
-            for(Spieler spieler : spielerListe){
-                for(Schlumpf schlumpf : spieler.getSchlumpfListe()){
-                    if(schlumpf.getName().contentEquals(configName)) {
+            for (Spieler spieler : spielerListe) {
+                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                    if (schlumpf.getName().contentEquals(configName)) {
                         schlumpf.setAktuellesFeld(feld);
                         //System.out.println(schlumpf.getName() + ": " + schlumpf.getAktuellesFeld());
                     }
@@ -186,23 +188,50 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl, Richtung richtung) {
-
         for (Spieler spieler : spielerListe) {
             for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                 if (schlumpf.getName().equals(figurName)) {
+                    for (int i = 1; i <= augenzahl; i++) {
 
+                        //überprüfen ob abzweigung
+                        if (schlumpf.getAktuellesFeld() == 3 || schlumpf.getAktuellesFeld() == 31) {
+                            if (richtung == Richtung.WEITER) {
+                                schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + i);
+                            } else if (schlumpf.getAktuellesFeld() == 3) {
+                                schlumpf.setAktuellesFeld(8);
+                            } else if (schlumpf.getAktuellesFeld() == 31) {
+                                schlumpf.setAktuellesFeld(36);
+                            }
 
+                        } else if (schlumpf.getAktuellesFeld() == 7) {
+                            schlumpf.setAktuellesFeld(15);
+                        } else if (schlumpf.getAktuellesFeld() == 35) {
+                            schlumpf.setAktuellesFeld(1);
+                        } else {
+                            schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + i); //zieht feld für feld
+                        }
+
+                        //pro feld statusveränderungen anpassen:
+                        if (schlumpf.getAktuellesFeld() == fliege.getFliegeAktuellesFeld()) {
+                            schlumpf.setIstZombie(true);
+                        }
+                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
+                            schlumpf.setIstZombie(false);
+                        }
+
+                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
+                            zielfeld.addToZielListe(schlumpf);
+                            return true;
+                        }
+
+                    }
                     return true;
                 }
             }
         }
-        // spieler rausfinden über figurname(ROT/ BLAU/...)
-        //spieler.getschlupflist
-        //Figur finden
-
-        //feld addieren  je nach richtung + setzen
         return false;
     }
+
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
@@ -218,6 +247,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         }
                         if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
                             schlumpf.setIstZombie(false);
+                        }
+
+                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
+                            zielfeld.addToZielListe(schlumpf);
+                            return true;
                         }
                     }
                     return true;
@@ -236,12 +270,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 }
             }
         }
-        if(figurName.contentEquals("Bzz")){
+        if (figurName.contentEquals("Bzz")) {
             return fliege.getFliegeAktuellesFeld();
-        } else if(figurName.contentEquals("Doc")){
+        } else if (figurName.contentEquals("Doc")) {
             return doc.getAktuellesFeld();
         }
-        return -1; // TODO: 10.03.2020 muss abgefangen werden
+        return -1;
     }
 
     @Override
@@ -253,9 +287,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 }
             }
         }
-        if(figurName.contentEquals("Bzz")){
+        if (figurName.contentEquals("Bzz")) {
             return fliege.getFliegeIstZombie();
-        } else if(figurName.contentEquals("Doc")){
+        } else if (figurName.contentEquals("Doc")) {
             return doc.getIstZombie();
         }
         return false;
@@ -268,6 +302,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public Farbe gewinner() {
+//zielfeldliste durchgucken, ob vier leichfarbige schlümpfe drin sind, gewinner zurückgeben
+
         return null;
     }
 }
