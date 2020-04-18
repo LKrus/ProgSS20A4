@@ -175,10 +175,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
          */
 
         String[] confs = conf.split(", ");
-        for (String config : confs) {
-            String name = config.substring(0, config.indexOf(":"));
+        for(String config : confs){
+            String configName = config.substring(0,config.indexOf(":"));
             int feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
-            System.out.println(name + ": " + feld);
+
+            for(Spieler spieler : spielerListe){
+                for(Schlumpf schlumpf : spieler.getSchlumpfListe()){
+                    if(schlumpf.getName().contentEquals(configName)) {
+                        schlumpf.setAktuellesFeld(feld);
+                        System.out.println(schlumpf.getName() + ": " + schlumpf.getAktuellesFeld());
+                    }
+                }
+            }
         }
 
         /*je nach string, schlümpfe und bzzt und doc bewegen
