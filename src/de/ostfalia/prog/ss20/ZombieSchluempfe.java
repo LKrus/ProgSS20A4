@@ -127,9 +127,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
 
         for (Feld feld : felder) {
-            System.out.print("\nFeld " + feld.getNummer() + " : ");
+            //System.out.print("\nFeld " + feld.getNummer() + " : ");
             for (Feld nachbar : feld.getNachbarListe()) {
-                System.out.print(nachbar.getNummer() + " ");
+                //System.out.print(nachbar.getNummer() + " ");
             }
         }
 
@@ -183,7 +183,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 for(Schlumpf schlumpf : spieler.getSchlumpfListe()){
                     if(schlumpf.getName().contentEquals(configName)) {
                         schlumpf.setAktuellesFeld(feld);
-                        System.out.println(schlumpf.getName() + ": " + schlumpf.getAktuellesFeld());
+                        //System.out.println(schlumpf.getName() + ": " + schlumpf.getAktuellesFeld());
                     }
                 }
             }

@@ -11,7 +11,7 @@ public class Schlumpf extends Figur {
         this.aktuellesFeld = aktuellesFeld;
         this.istZombie = istZombie;
 
-        System.out.println(name + " wurde auf Feld " + aktuellesFeld + " platziert!");
+        //System.out.println(name + " wurde auf Feld " + aktuellesFeld + " platziert!");
     }
 
     public int getAktuellesFeld() {
