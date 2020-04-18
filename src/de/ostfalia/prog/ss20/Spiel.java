@@ -3,7 +3,7 @@ package de.ostfalia.prog.ss20;
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.felder.Spezialfeld;
 
-import static de.ostfalia.prog.ss20.enums.Farbe.GELB;
+import static de.ostfalia.prog.ss20.enums.Farbe.*;
 
 /**
  * Controller
@@ -36,7 +36,7 @@ public class Spiel {
          */
 
 
-        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe("BLAU-A:30, BLAU-B:28, BLAU-C:30, BLAU-D:28, GELB-A:30, GELB-B:28", GELB);
+        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe("BLAU-A:30, BLAU-B:28, BLAU-C:30, BLAU-D:28, GELB-A:30, GELB-B:28", GELB, BLAU, ROT);
 //        System.out.println(zombieSchluempfe.getSpielerListe().get(0).name);
 
     }

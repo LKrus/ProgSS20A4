@@ -121,14 +121,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                     break;
             }
         }
-
-        for(Feld feld: felder){
-            System.out.print("\nFeld " + feld.getNummer() + " : ");
-            for(Feld nachbar: feld.getNachbarListe()){
-                System.out.print(nachbar.getNummer() + " ");
-            }
-        }
-
     }
 
     public List<Spieler> getSpielerListe() {
@@ -160,6 +152,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         for (Farbe farbe : farben) {
             spielerListe.add(new Spieler(farbe));
+            System.out.println(farbe.toString() + "hinzugefügt");
         }
 
         initialisieren();
@@ -173,9 +166,17 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         String[] confs = conf.split(", ");
         for(String config : confs){
-            String name = config.substring(0,config.indexOf(":"));
+            String configName = config.substring(0,config.indexOf(":"));
             int feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
-            System.out.println(name + ": " + feld);
+
+            for(Spieler spieler : spielerListe){
+                for(Schlumpf schlumpf : spieler.getSchlumpfListe()){
+                    if(schlumpf.getName().contentEquals(configName)) {
+                        schlumpf.setAktuellesFeld(feld);
+                        System.out.println(schlumpf.getName() + ": " + schlumpf.getAktuellesFeld());
+                    }
+                }
+            }
         }
 
         /*je nach string, schlümpfe und bzzt und doc bewegen
@@ -194,6 +195,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
+
+
         return false;
     }
 
