@@ -31,5 +31,14 @@ Z
 *src/de/ostfalia/prog/ss20/felder/Feld.java,d\0\d03d7fd862693b9dad4e6d3bf23f8f8167032074
 _
 /src/de/ostfalia/prog/ss20/ZombieSchluempfe.java,b\a\ba3c5baf6a8a4fa6036cb7cde88e39b4e354e0db
+<<<<<<< Updated upstream
+=======
+O
+.idea/libraries/JUnit4AddOn.xml,1\7\1771aa68c67d41f097c66253a0f674b5e1c8d00b
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+>
+ProgSS20A1.iml,6\3\6324aba132264d964624a6c440a6bd233b31f1f9
+>>>>>>> Stashed changes
 `
 0src/de/ostfalia/prog/ss20/test/Aufgabe1Test.java,d\b\db973d1924c9169784610a49440877b4e491b084

@@ -17,6 +17,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     public void initialisieren(){
 
+
         List<Feld> felder = new ArrayList<>();
         List<Feld> nachbarFelder = new ArrayList<>();
 
@@ -127,6 +128,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 System.out.print(nachbar.getNummer() + " ");
             }
         }
+
     }
 
     public List<Spieler> getSpielerListe() {
@@ -147,14 +149,30 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
 
         initialisieren();
-
+ /*
+        bzzt erstellen
+        doc erstellen
+         */
     }
 
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
+
+        for (Farbe farbe : farben) {
+            spielerListe.add(new Spieler(farbe));
+        }
+
+        initialisieren();
+
+
+
+
         /*
         conf aufspalten
-        figuren erstellen
+
+        je nach string, schlümpfe und bzzt und doc bewegen
+
+
         bzzt erstellen
         doc erstellen
          */
