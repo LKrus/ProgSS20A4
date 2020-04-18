@@ -169,8 +169,16 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         /*
         conf aufspalten
+         */
 
-        je nach string, schlümpfe und bzzt und doc bewegen
+        String[] confs = conf.split(", ");
+        for(String config : confs){
+            String name = config.substring(0,config.indexOf(":"));
+            int feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
+            System.out.println(name + ": " + feld);
+        }
+
+        /*je nach string, schlümpfe und bzzt und doc bewegen
 
 
         bzzt erstellen
