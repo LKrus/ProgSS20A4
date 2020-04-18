@@ -146,23 +146,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     public ZombieSchluempfe(Farbe... farben) {
         //je nachdem wie viele Farben, so viele Spieler
-
-
         for (Farbe farbe : farben) {
             spielerListe.add(new Spieler(farbe));
         }
-
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Fliege", 20);
 
         initialisieren();
-
     }
 
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
-
         for (Farbe farbe : farben) {
             spielerListe.add(new Spieler(farbe));
         }
@@ -170,10 +165,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Fliege", 20);
 
-        /*
-        conf aufspalten
-         */
-
+        //conf aufspalten:
         String[] confs = conf.split(", ");
         for(String config : confs){
             String configName = config.substring(0,config.indexOf(":"));
@@ -188,11 +180,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 }
             }
         }
-
-        /*je nach string, schlümpfe und bzzt und doc bewegen
-
-         */
-
         initialisieren();
     }
 
@@ -254,6 +241,13 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean istZombie(String figurName) {
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                if (schlumpf.getName().equals(figurName)) {
+                    return schlumpf.isIstZombie();
+                }
+            }
+        }
         return false;
     }
 
