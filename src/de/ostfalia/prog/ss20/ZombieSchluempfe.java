@@ -3,7 +3,9 @@ package de.ostfalia.prog.ss20;
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
 import de.ostfalia.prog.ss20.felder.*;
+import de.ostfalia.prog.ss20.figuren.Doc;
 import de.ostfalia.prog.ss20.figuren.Figur;
+import de.ostfalia.prog.ss20.figuren.Fliege;
 import de.ostfalia.prog.ss20.figuren.Schlumpf;
 import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
 
@@ -148,11 +150,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             spielerListe.add(new Spieler(farbe));
         }
 
+
+        Doc doc = new Doc("Doc", 29);
+        Fliege fliege = new Fliege("Fliege", 20);
+
         initialisieren();
- /*
-        bzzt erstellen
-        doc erstellen
-         */
+
     }
 
 
@@ -162,30 +165,38 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             spielerListe.add(new Spieler(farbe));
         }
 
-        initialisieren();
-
-
-
+        Doc doc = new Doc("Doc", 29);
+        Fliege fliege = new Fliege("Fliege", 20);
 
         /*
         conf aufspalten
 
         je nach string, schlümpfe und bzzt und doc bewegen
 
-
-        bzzt erstellen
-        doc erstellen
          */
+
+        initialisieren();
     }
+
 
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl, Richtung richtung) {
+        // spieler rausfinden über figurname(ROT/ BLAU/...)
+        //spieler.getschlupflist
+        //Figur finden
+
+        //feld addieren  je nach richtung + setzen
         return false;
     }
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
+        // spieler rausfinden über figurname(ROT/ BLAU/...)
+        //spieler.getschlupflist
+        //Figur finden
+
+        //feld addieren + setzen
         return false;
     }
 
