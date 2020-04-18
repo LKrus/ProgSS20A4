@@ -1,16 +1,0 @@
-
-<<<<<<< Updated upstream
-usquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 50 to the 15 allowed.(»¾ÌÃıÿÿÿÿ8¹ìÙÆ–.
-psquid:UselessImportCheck"@Remove this unused import 'de.ostfalia.prog.ss20.figuren.Figur'.(õåÆ„şÿÿÿÿ8¦ãÖŒ.
-Qsquid:S1135°"2Complete the task associated to this TODO comment.(‘±¿8É§›Å–.
-Msquid:S2140‚")Use "java.util.Random.nextInt()" instead.(ï›´Ÿşÿÿÿÿ8É§›Å–.
-Psquid:S1481"2Remove this unused "nachbarFelder" local variable.(ªÀŠ8Ÿÿ˜Ï.
-Ksquid:S1068"-Remove this unused "feldListe" private field.(ò¶Í¾8Ÿÿ˜Ï.
-=======
-Esquid:S2189""Correct this loop's end condition.(Ÿ ÊÕøÿÿÿÿ8ÔÂ‹ .
-Lsquid:S2140 ")Use "java.util.Random.nextInt()" instead.(ï›´Ÿşÿÿÿÿ8»®ŸœŒ.
-psquid:UselessImportCheck"@Remove this unused import 'de.ostfalia.prog.ss20.figuren.Figur'.(õåÆ„şÿÿÿÿ8¦ãÖŒ.
-Gsquid:S00108")Either remove or fill this block of code.(°çõ-8–ë .
-\squid:S2251"9"x" is incremented and will never reach "stop condition".(Ÿ ÊÕøÿÿÿÿ8ÔÂ‹ .
-Psquid:S1135L"2Complete the task associated to this TODO comment.(‘±¿8ÂçÜŒ.
->>>>>>> Stashed changes

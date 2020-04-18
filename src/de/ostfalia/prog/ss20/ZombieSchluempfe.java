@@ -249,6 +249,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 }
             }
         }
+        if(figurName.contentEquals("Fliege")){
+            fliege.getFliegeAktuellesFeld();
+        } else if(figurName.contentEquals("Doc")){
+            doc.getAktuellesFeld();
+        }
         return -1; // TODO: 10.03.2020 muss abgefangen werden
     }
 

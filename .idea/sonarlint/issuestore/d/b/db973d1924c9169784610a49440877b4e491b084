@@ -1,66 +1,0 @@
-
-Msquid:S1444M"/Make this "public static ConstrMsg" field final(‰ì˜8½ªÈŸ.
-Ÿsquid:S1186`"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.( ²€÷8½ªÈŸ.
-"squid:ClassVariableVisibilityCheckO"VMake moveDirMsg a static final constant or non-public and provide accessors if needed.(µ‡Ôøÿÿÿÿ8½ªÈŸ.
-‹"squid:ClassVariableVisibilityCheckK"QMake trace a static final constant or non-public and provide accessors if needed.(«ï›Óıÿÿÿÿ8½ªÈŸ.
-msquid:S1192k"JDefine a constant instead of duplicating this literal "BLAU-A:0" 12 times.(³ùæüÿÿÿÿ8½ªÈŸ.
-msquid:S1192k"JDefine a constant instead of duplicating this literal "Bzz:20:Z" 28 times.(³ùæüÿÿÿÿ8½ªÈŸ.
-fsquid:S1192¸"HDefine a constant instead of duplicating this literal "BLAU-A" 16 times.(÷†b8½ªÈŸ.
-jsquid:S00112h"FDefine and throw a dedicated exception instead of using a generic one.(¢ˆ»êúÿÿÿÿ8½ªÈŸ.
-msquid:S1192k"JDefine a constant instead of duplicating this literal "BLAU-C:0" 27 times.(³ùæüÿÿÿÿ8½ªÈŸ.
-fsquid:S00112¥"FDefine and throw a dedicated exception instead of using a generic one.(öèè¤8½ªÈŸ.
-Gsquid:S1444I")Make this "public static opt" field final(‹Êº€8½ªÈŸ.
-fsquid:S00112í"FDefine and throw a dedicated exception instead of using a generic one.(ŠÃ´å8½ªÈŸ.
-nsquid:S1192"JDefine a constant instead of duplicating this literal "Spiel 2: " 4 times.(ŸÉ‹üÿÿÿÿ8½ªÈŸ.
-ksquid:S1192x"HDefine a constant instead of duplicating this literal "ROT-C:0" 3 times.(¹½¼£úÿÿÿÿ8½ªÈŸ.
-hsquid:S1192ñ"IDefine a constant instead of duplicating this literal "BLAU-A:4" 4 times.(É–Ì¦8½ªÈŸ.
-jsquid:S00112t"FDefine and throw a dedicated exception instead of using a generic one.(ú™íıÿÿÿÿ8½ªÈŸ.
-"squid:ClassVariableVisibilityCheckJ"UMake messenger a static final constant or non-public and provide accessors if needed.(â¤£±ÿÿÿÿÿ8½ªÈŸ.
-gsquid:S1192‰"HDefine a constant instead of duplicating this literal "Bzz:4:Z" 3 times.(ø³’ê8½ªÈŸ.
-psquid:S1192—"QDefine a constant instead of duplicating this literal "(\"%s\", %s, %s)" 3 times.(É¥ïÿ8½ªÈŸ.
-fsquid:S00112”"FDefine and throw a dedicated exception instead of using a generic one.(Üş³8½ªÈŸ.
-ksquid:S1192x"HDefine a constant instead of duplicating this literal "ROT-A:0" 3 times.(¹½¼£úÿÿÿÿ8½ªÈŸ.
-„"squid:ClassVariableVisibilityCheckI"OMake opt a static final constant or non-public and provide accessors if needed.(‹Êº€8½ªÈŸ.
-Rsquid:S1444R"/Make this "public static classAnno" field final(ú«ÿÿÿÿÿ8½ªÈŸ.
-¤squid:S1186]"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ë³‹ôûÿÿÿÿ8½ªÈŸ.
-fsquid:S00112ƒ"FDefine and throw a dedicated exception instead of using a generic one.(Û–´œ8½ªÈŸ.
-qsquid:S1192†"MDefine a constant instead of duplicating this literal "(\"%s\", %s)" 4 times.(ÁâÉÈıÿÿÿÿ8½ªÈŸ.
-Ksquid:S1444N"-Make this "public static moveMsg" field final(®¸™Å8½ªÈŸ.
-ksquid:S00112ö"FDefine and throw a dedicated exception instead of using a generic one.(ñ­ Òøÿÿÿÿ8½ªÈŸ.
-lsquid:S1192Ì"HDefine a constant instead of duplicating this literal "BLAU-B" 14 times.( œæüùÿÿÿÿ8½ªÈŸ.
-msquid:S1192k"JDefine a constant instead of duplicating this literal "BLAU-B:0" 17 times.(³ùæüÿÿÿÿ8½ªÈŸ.
-fsquid:S00112³"FDefine and throw a dedicated exception instead of using a generic one.(±ÌÇï8½ªÈŸ.
-msquid:S1192Î"IDefine a constant instead of duplicating this literal "BLAU-B:1" 3 times.(ç§ü·ûÿÿÿÿ8½ªÈŸ.
-Ssquid:S1444O"0Make this "public static moveDirMsg" field final(µ‡Ôøÿÿÿÿ8½ªÈŸ.
-rsquid:S3008M"TRename this field "ConstrMsg" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰ì˜8½ªÈŸ.
-ksquid:S1192k"HDefine a constant instead of duplicating this literal "Doc:29" 28 times.(³ùæüÿÿÿÿ8½ªÈŸ.
-msquid:S1192š"IDefine a constant instead of duplicating this literal "BLAU-A:1" 6 times.(Ëšê¼ùÿÿÿÿ8½ªÈŸ.
-Š"squid:ClassVariableVisibilityCheckM"UMake ConstrMsg a static final constant or non-public and provide accessors if needed.(‰ì˜8½ªÈŸ.
-ksquid:S1192x"HDefine a constant instead of duplicating this literal "ROT-D:0" 3 times.(¹½¼£úÿÿÿÿ8½ªÈŸ.
-ksquid:S1192x"HDefine a constant instead of duplicating this literal "ROT-B:0" 3 times.(¹½¼£úÿÿÿÿ8½ªÈŸ.
-fsquid:S00112Ø"FDefine and throw a dedicated exception instead of using a generic one.(èĞ¿ÿ8½ªÈŸ.
-esquid:S1192‰"FDefine a constant instead of duplicating this literal "Doc:6" 3 times.(ø³’ê8½ªÈŸ.
-ksquid:S00112—"FDefine and throw a dedicated exception instead of using a generic one.(“ñÍúÿÿÿÿ8½ªÈŸ.
-ksquid:S00112„"FDefine and throw a dedicated exception instead of using a generic one.(ÉÁàõıÿÿÿÿ8½ªÈŸ.
-msquid:S1192k"JDefine a constant instead of duplicating this literal "BLAU-D:0" 27 times.(³ùæüÿÿÿÿ8½ªÈŸ.
-nsquid:S1192ø"JDefine a constant instead of duplicating this literal "Spiel 1: " 4 times.(¤µö¸şÿÿÿÿ8½ªÈŸ.
-fsquid:S00112Ã"FDefine and throw a dedicated exception instead of using a generic one.(òİöÖ8½ªÈŸ.
-ˆ"squid:ClassVariableVisibilityCheckN"SMake moveMsg a static final constant or non-public and provide accessors if needed.(®¸™Å8½ªÈŸ.
-fsquid:S00112È"FDefine and throw a dedicated exception instead of using a generic one.(›§ûº8½ªÈŸ.
-fsquid:S00112İ"FDefine and throw a dedicated exception instead of using a generic one.(–Ê‡¢8½ªÈŸ.
-ksquid:S00112ª"FDefine and throw a dedicated exception instead of using a generic one.(«ÛùÃùÿÿÿÿ8½ªÈŸ.
-©%squid:RedundantThrowsDeclarationCheckh"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(¢ˆ»êúÿÿÿÿ8šÀ .
-©%squid:RedundantThrowsDeclarationCheckt"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(ú™íıÿÿÿÿ8šÀ .
-ª%squid:RedundantThrowsDeclarationCheck„"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(ÉÁàõıÿÿÿÿ8šÀ .
-¥%squid:RedundantThrowsDeclarationCheck”"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(Üş³8šÀ .
-¥%squid:RedundantThrowsDeclarationCheck¥"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(öèè¤8šÀ .
-¥%squid:RedundantThrowsDeclarationCheck³"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(±ÌÇï8šÀ .
-¥%squid:RedundantThrowsDeclarationCheckÃ"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(òİöÖ8šÀ .
-¥%squid:RedundantThrowsDeclarationCheckØ"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(èĞ¿ÿ8šÀ .
-¥%squid:RedundantThrowsDeclarationCheckí"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(ŠÃ´å8šÀ .
-¥%squid:RedundantThrowsDeclarationCheckƒ"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(Û–´œ8šÀ .
-ª%squid:RedundantThrowsDeclarationCheck—"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(“ñÍúÿÿÿÿ8šÀ .
-ª%squid:RedundantThrowsDeclarationCheckª"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(«ÛùÃùÿÿÿÿ8šÀ .
-¥%squid:RedundantThrowsDeclarationCheckÈ"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(›§ûº8šÀ .
-¥%squid:RedundantThrowsDeclarationCheckİ"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(–Ê‡¢8šÀ .
-ª%squid:RedundantThrowsDeclarationCheckö"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(ñ­ Òøÿÿÿÿ8šÀ .
