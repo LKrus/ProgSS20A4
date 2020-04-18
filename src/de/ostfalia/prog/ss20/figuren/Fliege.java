@@ -9,8 +9,12 @@ public class Fliege extends NPC {
         this.aktuellesFeld=aktuellesFeld;
     }
 
-    public int getFliegeAktuellesFeld(){
+    public int getAktuellesFeld(){
         return aktuellesFeld;
+    }
+
+    public void setAktuellesFeld(int feld){
+        aktuellesFeld = feld;
     }
 
     public boolean getFliegeIstZombie(){

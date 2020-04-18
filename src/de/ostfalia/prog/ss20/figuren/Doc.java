@@ -13,6 +13,10 @@ public class Doc extends NPC {
         return aktuellesFeld;
     }
 
+    public void setAktuellesFeld(int feld){
+        aktuellesFeld = feld;
+    }
+
     public boolean getIstZombie(){
         return istZombie;
     }

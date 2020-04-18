@@ -4,7 +4,6 @@ import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
 import de.ostfalia.prog.ss20.felder.*;
 import de.ostfalia.prog.ss20.figuren.Doc;
-import de.ostfalia.prog.ss20.figuren.Figur;
 import de.ostfalia.prog.ss20.figuren.Fliege;
 import de.ostfalia.prog.ss20.figuren.Schlumpf;
 import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
@@ -181,6 +180,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                     }
                 }
             }
+            if(configName.contentEquals("Bzz")){
+                fliege.setAktuellesFeld(feld);
+            } else if(configName.contentEquals("Doc")){
+                doc.setAktuellesFeld(feld);
+            }
         }
         initialisieren();
     }
@@ -212,7 +216,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         }
 
                         //pro feld statusveränderungen anpassen:
-                        if (schlumpf.getAktuellesFeld() == fliege.getFliegeAktuellesFeld()) {
+                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
                             schlumpf.setIstZombie(true);
                         }
                         if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
@@ -239,10 +243,17 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                 if (schlumpf.getName().equals(figurName)) {
                     for (int i = 1; i <= augenzahl; i++) {
-                        schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + i); //zieht feld für feld
 
+                        /*
+                            Bei keiner Eingabe soll der Schlumpf gerade weiterlaufen.
+                         */
+                        if(schlumpf.getAktuellesFeld() == 35){
+                            schlumpf.setAktuellesFeld(1);
+                        } else {
+                            schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
+                        }
                         //pro feld statusveränderungen anpassen:
-                        if (schlumpf.getAktuellesFeld() == fliege.getFliegeAktuellesFeld()) {
+                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
                             schlumpf.setIstZombie(true);
                         }
                         if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
@@ -271,7 +282,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
         if (figurName.contentEquals("Bzz")) {
-            return fliege.getFliegeAktuellesFeld();
+            return fliege.getAktuellesFeld();
         } else if (figurName.contentEquals("Doc")) {
             return doc.getAktuellesFeld();
         }
