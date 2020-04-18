@@ -190,6 +190,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl, Richtung richtung) {
+
+
         // spieler rausfinden über figurname(ROT/ BLAU/...)
         //spieler.getschlupflist
         //Figur finden
@@ -200,11 +202,16 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
-        // spieler rausfinden über figurname(ROT/ BLAU/...)
-        //spieler.getschlupflist
-        //Figur finden
 
-        //feld addieren + setzen
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                if (schlumpf.getName().equals(figurName)) {
+                    schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld()+augenzahl);
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
