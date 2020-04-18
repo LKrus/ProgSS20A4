@@ -2,6 +2,7 @@ package de.ostfalia.prog.ss20.figuren;
 
 public class Doc extends NPC {
     private int aktuellesFeld;
+    private boolean istZombie = false;
 
     public Doc(String name, int aktuellesFeld) {
         super(name, aktuellesFeld);
@@ -10,6 +11,10 @@ public class Doc extends NPC {
 
     public int getAktuellesFeld(){
         return aktuellesFeld;
+    }
+
+    public boolean getIstZombie(){
+        return istZombie;
     }
 
     @Override

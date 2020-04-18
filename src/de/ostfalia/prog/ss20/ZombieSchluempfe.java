@@ -236,10 +236,10 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 }
             }
         }
-        if(figurName.contentEquals("Fliege")){
-            fliege.getFliegeAktuellesFeld();
+        if(figurName.contentEquals("Bzz")){
+            return fliege.getFliegeAktuellesFeld();
         } else if(figurName.contentEquals("Doc")){
-            doc.getAktuellesFeld();
+            return doc.getAktuellesFeld();
         }
         return -1; // TODO: 10.03.2020 muss abgefangen werden
     }
@@ -252,6 +252,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                     return schlumpf.isIstZombie();
                 }
             }
+        }
+        if(figurName.contentEquals("Bzz")){
+            return fliege.getFliegeIstZombie();
+        } else if(figurName.contentEquals("Doc")){
+            return doc.getIstZombie();
         }
         return false;
     }
