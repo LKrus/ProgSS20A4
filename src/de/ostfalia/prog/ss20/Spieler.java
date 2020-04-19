@@ -16,7 +16,7 @@ public class Spieler {
         this.farbe = farbe;
 
 
-        switch (farbe) { // TODO: 10.03.2020 aktuellesfeld muss manuell hinzugefügt werden können? 
+        switch (farbe) {
             case ROT:
                 schlumpfListe.add(new Schlumpf("ROT-A", 0, false));
                 schlumpfListe.add(new Schlumpf("ROT-B", 0, false));
@@ -40,6 +40,9 @@ public class Spieler {
                 schlumpfListe.add(new Schlumpf("GRUEN-B", 0, false));
                 schlumpfListe.add(new Schlumpf("GRUEN-C", 0, false));
                 schlumpfListe.add(new Schlumpf("GRUEN-D", 0, false));
+                break;
+            default:
+                System.err.println("ERROR 001: UNKNOWN COLOUR");
                 break;
         }
         name = farbe.name();

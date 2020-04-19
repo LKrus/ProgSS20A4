@@ -1,7 +1,6 @@
 package de.ostfalia.prog.ss20;
 
 import de.ostfalia.prog.ss20.enums.Farbe;
-import de.ostfalia.prog.ss20.felder.Spezialfeld;
 
 import java.util.Scanner;
 

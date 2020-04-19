@@ -21,17 +21,17 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     Zielfeld zielfeld;
 
     public void initialisieren() {
-
-
-        List<Feld> felder = new ArrayList<>();
         List<Feld> nachbarFelder = new ArrayList<>();
-        zielfeld = new Zielfeld(36); // TODO: 18.04.2020 in spielfeld logik einbauen?
+        zielfeld = new Zielfeld(36);
+        List<Feld> felder = felderGenerieren();
 
+        //Startspieler bestimmen
+        spielerAmZug = spielerListe.get(0);
+    }
+
+    public List<Feld> felderGenerieren(){
+        List<Feld> felder = new ArrayList<>();
         for (int x = 36; x >= 0; x--) {
-            // Felder erstellen (Standard-Konstruktor, ohne Werte, außer Feld-Nummer) (Aufpassen, welche Felder wichtig sind)
-            // Nach Erstellung: Hinzufügen der NAchbarfelder (tw. HardCode, tw. Vereinfachen)
-            // Start-Feld hinzufügen
-
             switch (x) {
                 case 0:
                     //Startfeld
@@ -78,64 +78,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                     break;
             }
         }
-
-        for (Feld feld : felder) {
-            switch (feld.getNummer()) {
-                case 3:
-                    for (Feld feld2 : felder) {
-                        if (feld2.getNummer() == 4 || feld2.getNummer() == 8) {
-                            feld.getNachbarListe().add(feld2);
-                        }
-                    }
-                    feld.setIstAbzweigung(true);
-                    break;
-                case 7:
-                    for (Feld feld2 : felder) {
-                        if (feld2.getNummer() == 15) {
-                            feld.getNachbarListe().add(feld2);
-                        }
-                    }
-                    break;
-                case 14:
-                    for (Feld feld2 : felder) {
-                        if (feld2.getNummer() == 15) {
-                            feld.getNachbarListe().add(feld2);
-                        }
-                    }
-                    break;
-                case 31:
-                    for (Feld feld2 : felder) {
-                        if (feld2.getNummer() == 32 || feld2.getNummer() == 36) {
-                            feld.getNachbarListe().add(feld2);
-                        }
-                    }
-                    feld.setIstAbzweigung(true);
-                    break;
-                case 35:
-                    for (Feld feld2 : felder) {
-                        if (feld2.getNummer() == 1) {
-                            feld.getNachbarListe().add(feld2);
-                        }
-                    }
-                    break;
-                default:
-                    for (Feld feld2 : felder) {
-                        if (feld2.getNummer() == feld.getNummer() + 1) {
-                            feld.getNachbarListe().add(feld2);
-                        }
-                    }
-                    break;
-            }
-        }
-
-        for (Feld feld : felder) {
-            //System.out.print("\nFeld " + feld.getNummer() + " : ");
-            for (Feld nachbar : feld.getNachbarListe()) {
-                //System.out.print(nachbar.getNummer() + " ");
-            }
-        }
-        //Startspieler bestimmen
-        spielerAmZug = spielerListe.get(0);
+        return felder;
     }
 
     public void zugBeenden(){
