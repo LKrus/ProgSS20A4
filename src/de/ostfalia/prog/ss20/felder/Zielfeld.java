@@ -21,4 +21,8 @@ public class Zielfeld extends Spezialfeld {
             return false;
         }
     }
+
+    public List<Schlumpf> getZielListe(){
+        return zielListe;
+    }
 }

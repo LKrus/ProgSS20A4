@@ -45,6 +45,14 @@ public class Spieler {
         name = farbe.name();
     }
 
+    public Farbe getSpielerFarbe(){
+        return farbe;
+    }
+
+    public String getSpielerFarbeString(){
+        return farbe.name();
+    }
+
     public List<Schlumpf> getSchlumpfListe() {
         return schlumpfListe;
     }
