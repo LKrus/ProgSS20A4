@@ -198,9 +198,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                     }
                 }
             }
-            if(configName.contentEquals("Bzz")){
+            if (configName.contentEquals("Bzz")) {
                 fliege.setAktuellesFeld(feld);
-            } else if(configName.contentEquals("Doc")){
+            } else if (configName.contentEquals("Doc")) {
                 doc.setAktuellesFeld(feld);
             }
         }
@@ -265,11 +265,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         /*
                             Bei keiner Eingabe soll der Schlumpf gerade weiterlaufen.
                          */
-                        if(schlumpf.getAktuellesFeld() == 35){
+                        if (schlumpf.getAktuellesFeld() == 35) {
                             schlumpf.setAktuellesFeld(1);
                         } else if (schlumpf.getAktuellesFeld() == 7) {
                             schlumpf.setAktuellesFeld(15);
-                        }else {
+                        } else {
                             schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
                         }
 
@@ -340,8 +340,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public Farbe gewinner() {
-//zielfeldliste durchgucken, ob vier leichfarbige schlümpfe drin sind, gewinner zurückgeben
-
+        int counter=0;
+        for (Spieler spieler: spielerListe) { //für jeden spieler die liste durchsuchen
+            for (Schlumpf schlumpf:spieler.getSchlumpfListe()) {
+                if (schlumpf.getAktuellesFeld()==36){
+                    counter++;
+                }
+            }
+            if (counter==4){ //spieler hat 4 schlümpfe im ziel, hat gewonnen
+                return spieler.getSpielerFarbe();
+            }
+            counter=0;
+        }
         return null;
     }
 }
