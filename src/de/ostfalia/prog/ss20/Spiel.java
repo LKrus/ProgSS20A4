@@ -39,12 +39,11 @@ public class Spiel {
             //alles wiederholen;
         }
 
-
-
-//        System.out.println(zombieSchluempfe.getFarbeAmZug());
-//        zombieSchluempfe.bewegeFigur("BLAU-A", 3);
-//        System.out.println(zombieSchluempfe.getFarbeAmZug());
-////        System.out.println(zombieSchluempfe.getSpielerListe().get(0).name);
+        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(BLAU, ROT);
+        System.out.println(zombieSchluempfe.toString());
+        zombieSchluempfe.bewegeFigur("BLAU-A", 3);
+        System.out.println(zombieSchluempfe.toString());
+//        System.out.println(zombieSchluempfe.getSpielerListe().get(0).name);
 
     }
 
