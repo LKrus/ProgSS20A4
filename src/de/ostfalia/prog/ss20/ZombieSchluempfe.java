@@ -215,6 +215,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                             schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + i); //zieht feld für feld
                         }
 
+                        //wenn schlumpf im ziel ist, ist zug beendet:
+                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
+                            zielfeld.addToZielListe(schlumpf);
+                            return true;
+                        }
+
                         //pro feld statusveränderungen anpassen:
                         if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
                             schlumpf.setIstZombie(true);
@@ -222,12 +228,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
                             schlumpf.setIstZombie(false);
                         }
-
-                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
-                            zielfeld.addToZielListe(schlumpf);
-                            return true;
-                        }
-
                     }
                     return true;
                 }
@@ -243,26 +243,29 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                 if (schlumpf.getName().equals(figurName)) {
                     for (int i = 1; i <= augenzahl; i++) {
-
                         /*
                             Bei keiner Eingabe soll der Schlumpf gerade weiterlaufen.
                          */
                         if(schlumpf.getAktuellesFeld() == 35){
                             schlumpf.setAktuellesFeld(1);
-                        } else {
+                        } else if (schlumpf.getAktuellesFeld() == 7) {
+                            schlumpf.setAktuellesFeld(15);
+                        }else {
                             schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
                         }
+
+                        //wenn schlumpf im ziel ist, ist zug beendet:
+                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
+                            zielfeld.addToZielListe(schlumpf);
+                            return true;
+                        }
+
                         //pro feld statusveränderungen anpassen:
                         if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
                             schlumpf.setIstZombie(true);
                         }
                         if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
                             schlumpf.setIstZombie(false);
-                        }
-
-                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
-                            zielfeld.addToZielListe(schlumpf);
-                            return true;
                         }
                     }
                     return true;
@@ -271,6 +274,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
         return false;
     }
+
 
     @Override
     public int getFeldnummer(String figurName) {
@@ -308,6 +312,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public Farbe getFarbeAmZug() {
+        
         return null;
     }
 
