@@ -242,9 +242,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         //pro feld statusveränderungen anpassen:
                         if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
                             schlumpf.setIstZombie(true);
+                            System.out.println(schlumpf.getName()+" ist Zombie");
                         }
                         if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
                             schlumpf.setIstZombie(false);
+                            System.out.println(schlumpf.getName()+" ist kein Zombie");
                         }
                     }
                     zugBeenden();
@@ -282,9 +284,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         //pro feld statusveränderungen anpassen:
                         if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
                             schlumpf.setIstZombie(true);
+                            System.out.println(schlumpf.getName()+" ist Zombie");
                         }
                         if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
                             schlumpf.setIstZombie(false);
+                            System.out.println(schlumpf.getName()+" ist kein Zombie");
                         }
                     }
                     zugBeenden();
