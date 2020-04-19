@@ -15,6 +15,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     private List<Feld> feldListe = new ArrayList<>();
     private List<Spieler> spielerListe = new ArrayList<>();
+    private Spieler spielerAmZug;
     Fliege fliege;
     Doc doc;
     Zielfeld zielfeld;
@@ -133,7 +134,16 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 //System.out.print(nachbar.getNummer() + " ");
             }
         }
+        //Startspieler bestimmen
+        spielerAmZug = spielerListe.get(0);
+    }
 
+    public void zugBeenden(){
+        int newIndex = spielerListe.indexOf(spielerAmZug) + 1;
+        if(newIndex >= spielerListe.size()){
+            newIndex = 0;
+        }
+        spielerAmZug = spielerListe.get(newIndex);
     }
 
     public List<Spieler> getSpielerListe() {
@@ -170,13 +180,21 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         String[] confs = conf.split(", ");
         for (String config : confs) {
             String configName = config.substring(0, config.indexOf(":"));
-            int feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
+            int feld;
+            boolean istZombie;
+            if(config.contains(":Z")){
+                feld = Integer.parseInt(config.substring(config.indexOf(":") + 1, config.indexOf(":Z")));
+                istZombie = true;
+            } else {
+                feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
+                istZombie = false;
+            }
 
             for (Spieler spieler : spielerListe) {
                 for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                     if (schlumpf.getName().contentEquals(configName)) {
                         schlumpf.setAktuellesFeld(feld);
-                        //System.out.println(schlumpf.getName() + ": " + schlumpf.getAktuellesFeld());
+                        schlumpf.setIstZombie(istZombie);
                     }
                 }
             }
@@ -229,6 +247,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                             schlumpf.setIstZombie(false);
                         }
                     }
+                    zugBeenden();
                     return true;
                 }
             }
@@ -268,6 +287,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                             schlumpf.setIstZombie(false);
                         }
                     }
+                    zugBeenden();
                     return true;
                 }
             }
@@ -303,7 +323,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
         if (figurName.contentEquals("Bzz")) {
-            return fliege.getFliegeIstZombie();
+            return fliege.getIstZombie();
         } else if (figurName.contentEquals("Doc")) {
             return doc.getIstZombie();
         }
@@ -312,7 +332,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public Farbe getFarbeAmZug() {
-        
+        if(spielerAmZug != null){
+            return spielerAmZug.getFarbe();
+        }
         return null;
     }
 

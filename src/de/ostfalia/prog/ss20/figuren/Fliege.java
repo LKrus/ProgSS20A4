@@ -17,7 +17,7 @@ public class Fliege extends NPC {
         aktuellesFeld = feld;
     }
 
-    public boolean getFliegeIstZombie(){
+    public boolean getIstZombie(){
         return istZombie;
     }
 

@@ -21,6 +21,7 @@ public class Doc extends NPC {
         return istZombie;
     }
 
+
     @Override
     public void wirken(){
 

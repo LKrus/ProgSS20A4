@@ -48,4 +48,8 @@ public class Spieler {
     public List<Schlumpf> getSchlumpfListe() {
         return schlumpfListe;
     }
+
+    public Farbe getFarbe(){
+        return farbe;
+    }
 }
