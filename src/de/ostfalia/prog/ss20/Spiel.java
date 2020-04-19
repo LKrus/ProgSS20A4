@@ -15,29 +15,26 @@ public class Spiel {
     public static void main(String[] args) {
         Scanner scanner=new Scanner(System.in);
 
-        String input=scanner.nextLine();
-
-        //string aufspalten nach conf + farben
-        String conf="";
-
-        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(conf,GELB, ROT);
-
-        //spieler am zug festlegen (gelb)
-
-        int augenzahl = zombieSchluempfe.wuerfeln();
-
-        //abfragen welche figur gezogen werden soll:
-        String figurName = scanner.next();
-        //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
-        zombieSchluempfe.bewegeFigur(figurName,augenzahl);
+        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(GELB, ROT);
 
         Farbe farbeGewonnen = zombieSchluempfe.gewinner();
-        if (null!=farbeGewonnen){
-            System.out.println(farbeGewonnen+"hat gewonnen");
-        }else {
+
+        while (null!=farbeGewonnen) {
+
+            //spieler am zug festlegen (gelb)
+
+            int augenzahl = zombieSchluempfe.wuerfeln();
+            System.out.println("Augenzahl: "+augenzahl);
+
+            //abfragen welche figur gezogen werden soll:
+            String figurName = scanner.next();
+            //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
+            zombieSchluempfe.bewegeFigur(figurName, augenzahl);
+
             //spieler am zug +1
-            //alles wiederholen;
         }
+        System.out.println(farbeGewonnen + " hat gewonnen");
+
 
 //        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(BLAU, ROT);
 //        System.out.println(zombieSchluempfe.toString());
