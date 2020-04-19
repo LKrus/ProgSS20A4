@@ -354,4 +354,31 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
         return null;
     }
+
+    @Override
+    public String toString(){
+        String spielStatus = "Spielstatus: ";
+        for(Spieler spieler : spielerListe){
+            for(Schlumpf schlumpf : spieler.getSchlumpfListe()){
+                spielStatus = spielStatus.concat(schlumpf.getName() + ":" + schlumpf.getAktuellesFeld());
+                if(schlumpf.isIstZombie()){
+                    spielStatus = spielStatus.concat(":Z");
+                }
+                spielStatus = spielStatus.concat(", ");
+            }
+        }
+        //Bzz
+        spielStatus = spielStatus.concat("Bzz:" + fliege.getAktuellesFeld());
+        if(fliege.getIstZombie()){
+            spielStatus = spielStatus.concat(":Z");
+        }
+        spielStatus = spielStatus.concat(", ");
+
+        //Doc
+        spielStatus = spielStatus.concat("Doc:" + doc.getAktuellesFeld());
+        if(doc.getIstZombie()) {
+            spielStatus = spielStatus.concat(":Z");
+        }
+        return spielStatus;
+    }
 }
