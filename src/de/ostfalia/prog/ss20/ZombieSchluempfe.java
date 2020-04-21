@@ -21,9 +21,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     Zielfeld zielfeld;
 
     public void initialisieren() {
-        List<Feld> nachbarFelder = new ArrayList<>();
         zielfeld = new Zielfeld(36);
-        List<Feld> felder = felderGenerieren();
+        feldListe = felderGenerieren();
 
         //Startspieler bestimmen
         spielerAmZug = spielerListe.get(0);
@@ -89,14 +88,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         spielerAmZug = spielerListe.get(newIndex);
     }
 
-    public List<Spieler> getSpielerListe() {
-        return spielerListe;
-    }
-
     public static int wuerfeln() {
         return (int) (Math.random() * 6) + 1;
     }
-
 
     public ZombieSchluempfe(Farbe... farben) {
         //je nachdem wie viele Farben, so viele Spieler
@@ -109,7 +103,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         initialisieren();
     }
-
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
         for (Farbe farbe : farben) {
@@ -149,7 +142,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
         initialisieren();
     }
-
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl, Richtung richtung) {
@@ -200,7 +192,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         return false;
     }
 
-
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
         for (Spieler spieler : spielerListe) {
@@ -241,7 +232,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
         return false;
     }
-
 
     @Override
     public int getFeldnummer(String figurName) {
@@ -327,5 +317,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             spielStatus = spielStatus.concat(":Z");
         }
         return spielStatus;
+    }
+
+    public List<Spieler> getSpielerListe() {
+        return spielerListe;
     }
 }
