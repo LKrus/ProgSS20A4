@@ -12,23 +12,31 @@ import static de.ostfalia.prog.ss20.enums.Farbe.*;
 public class Spiel {
 
     public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(GELB, ROT);
 
         Farbe farbeGewonnen = zombieSchluempfe.gewinner();
 
-        while (null!=farbeGewonnen) {
+        while (null != farbeGewonnen) {
 
             //spieler am zug festlegen (gelb)
 
-            int augenzahl = zombieSchluempfe.wuerfeln();
-            System.out.println("Augenzahl: "+augenzahl);
+            int augenzahl = zombieSchluempfe.wuerfeln(); //6 = fliege
+            if (augenzahl == 6) {
+                while (augenzahl == 6) {
+                    augenzahl = zombieSchluempfe.wuerfeln();
+                }
+                System.out.println("Augenzahl der Fliege: " + augenzahl);
+                //fliege zieht, aber anders, fliegt über zwischenfelder hinweg und landet auf endfeld
+            }else{
+                System.out.println("Augenzahl: " + augenzahl);
 
-            System.out.println("Welche Figur soll gezogen werden?");
-            String figurName = scanner.next();
-            //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
-            zombieSchluempfe.bewegeFigur(figurName, augenzahl);
+                System.out.println("Welche Figur soll gezogen werden?");
+                String figurName = scanner.next();
+                //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
+                zombieSchluempfe.bewegeFigur(figurName, augenzahl);
+            }
 
             //spieler am zug +1
         }

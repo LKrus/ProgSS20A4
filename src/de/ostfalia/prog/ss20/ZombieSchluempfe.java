@@ -205,16 +205,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         return false;
     }
 
+
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
-        try {
-            bewegeFigur(figurName, augenzahl, Richtung.WEITER);
-            return true;
-        }catch (Exception e){
-            System.out.println("Hier ist was schiefgelaufen: " + e);
-            return false;
-        }
+        return  bewegeFigur(figurName, augenzahl, Richtung.WEITER);
     }
+
 
     @Override
     public int getFeldnummer(String figurName) {
