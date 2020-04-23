@@ -19,7 +19,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     // TODO: 23.04.2020 kommandozeilen interface erstellen
     /*
     anzeige aktueller spieler + augenzahl
-    auswahl + ziehen einer figur, abfrae weiter/abbiegen, ausgabe der neuen positionen
+    auswahl + ziehen einer figur, abfrae weiter/abbiegen, ausgabe der neuen positionen ----- fertig, wenn auch hässlich
     feststellen, wenn ein spieler gewonnen hat
     eingabe validierung
     fehlerausgaben bei ungültigen zügen

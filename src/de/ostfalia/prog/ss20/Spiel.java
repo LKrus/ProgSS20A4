@@ -2,6 +2,7 @@ package de.ostfalia.prog.ss20;
 
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
+import de.ostfalia.prog.ss20.figuren.Schlumpf;
 
 import java.util.Scanner;
 
@@ -22,8 +23,11 @@ public class Spiel {
         while (null != farbeGewonnen) {
 
             // TODO: 23.04.2020 spieler am zug festlegen (gelb)
+
             System.out.println("Es ist Spieler __ dran.");
+
             //evtl hier auflistung, wo seine figuren grad stehen?
+
             int augenzahl = zombieSchluempfe.wuerfeln(); //6 = fliege
             if (augenzahl == 6) {
                 while (augenzahl == 6) {
@@ -33,9 +37,10 @@ public class Spiel {
 
                 //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
                 if (zombieSchluempfe.fliege.getAktuellesFeld() <= 3 && zombieSchluempfe.fliege.getAktuellesFeld() + augenzahl > 3) {
+
                     System.out.println("In welche Richtung soll gezogen werden? WEITER oder ABZWEIGEN?");
-                    String richtungString = scanner.next();
-                    
+                    String richtungString = scanner.next(); // TODO: 23.04.2020 fehlerhafte eingabe abfangen
+
                     //geht das kürzer?
                     if (richtungString.toUpperCase().equals(Richtung.WEITER)) {
                         zombieSchluempfe.bewegeFigur("Fliege", augenzahl, Richtung.WEITER);
@@ -50,12 +55,33 @@ public class Spiel {
                 System.out.println("Augenzahl: " + augenzahl);
 
                 System.out.println("Welche Figur soll gezogen werden?");
-                String figurName = scanner.next(); //fehlerhafte eingabe
+                String figurName = scanner.next(); //fehlerhafte eingabe abfangen
 
                 //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
+                for (Spieler spieler : zombieSchluempfe.getSpielerListe()) {
+                    for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                        if (schlumpf.getName().equals(figurName)) {
 
-                zombieSchluempfe.bewegeFigur(figurName, augenzahl);
+                            if ((schlumpf.getAktuellesFeld() <= 3 && schlumpf.getAktuellesFeld() + augenzahl > 3)
+                                    || (schlumpf.getAktuellesFeld() <= 31 && schlumpf.getAktuellesFeld() + augenzahl > 31)) {
+
+                                System.out.println("In welche Richtung soll gezogen werden? WEITER oder ABZWEIGEN?");
+                                String richtungString = scanner.next(); // TODO: 23.04.2020 fehlerhafte eingabe abfangen
+
+                                //geht das kürzer?
+                                if (richtungString.toUpperCase().equals(Richtung.WEITER)) {
+                                    zombieSchluempfe.bewegeFigur(figurName, augenzahl, Richtung.WEITER);
+                                } else if (richtungString.toUpperCase().equals(Richtung.ABZWEIGEN)) {
+                                    zombieSchluempfe.bewegeFigur(figurName, augenzahl, Richtung.ABZWEIGEN);
+                                }
+                            } else {
+                                zombieSchluempfe.bewegeFigur(figurName, augenzahl);
+                            }
+                        }
+                    }
+                }
             }
+
 
             //spieler am zug +1
         }
