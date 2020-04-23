@@ -11,7 +11,20 @@ import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZombieSchluempfe implements IZombieSchluempfe {
+public class ZombieSchluempfe implements IZombieSchluempfe { 
+    
+    // TODO: 23.04.2020 fliege bewegt sich
+    // TODO: 23.04.2020 blütenfeld (11) einbauen, heilt schlümpfe 
+    // TODO: 23.04.2020 Die Kodierung der Figuren wird um Zombieschlümpfe erweitert, wie im Interface beschrieben?? 
+    // TODO: 23.04.2020 kommandozeilen interface erstellen
+    /*
+    anzeige aktueller spieler + augenzahl
+    auswahl + ziehen einer figur, abfrae weiter/abbiegen, ausgabe der neuen positionen
+    feststellen, wenn ein spieler gewonnen hat
+    eingabe validierung
+    fehlerausgaben bei ungültigen zügen
+    debugging/cheatbefehle, um bestimmte spielsituationen herstellen zu können
+     */
 
     private List<Feld> feldListe = new ArrayList<>();
     private List<Spieler> spielerListe = new ArrayList<>();
