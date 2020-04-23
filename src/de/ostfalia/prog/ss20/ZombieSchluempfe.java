@@ -207,43 +207,13 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
-        for (Spieler spieler : spielerListe) {
-            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                if (schlumpf.getName().equals(figurName)) {
-                    for (int i = 1; i <= augenzahl; i++) {
-                        /*
-                            Bei keiner Eingabe soll der Schlumpf gerade weiterlaufen.
-                         */
-                        if (schlumpf.getAktuellesFeld() == 35) {
-                            schlumpf.setAktuellesFeld(1);
-                        } else if (schlumpf.getAktuellesFeld() == 7) {
-                            schlumpf.setAktuellesFeld(15);
-                        } else {
-                            schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
-                        }
-
-                        //wenn schlumpf im ziel ist, ist zug beendet:
-                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
-                            zielfeld.addToZielListe(schlumpf);
-                            return true;
-                        }
-
-                        //pro feld statusveränderungen anpassen:
-                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
-                            schlumpf.setIstZombie(true);
-                            System.out.println(schlumpf.getName()+" ist Zombie");
-                        }
-                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
-                            schlumpf.setIstZombie(false);
-                            System.out.println(schlumpf.getName()+" ist kein Zombie");
-                        }
-                    }
-                    zugBeenden();
-                    return true;
-                }
-            }
+        try {
+            bewegeFigur(figurName, augenzahl, Richtung.WEITER);
+            return true;
+        }catch (Exception e){
+            System.out.println("Hier ist was schiefgelaufen: " + e);
+            return false;
         }
-        return false;
     }
 
     @Override

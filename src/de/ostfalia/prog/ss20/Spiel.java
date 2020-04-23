@@ -25,7 +25,7 @@ public class Spiel {
             int augenzahl = zombieSchluempfe.wuerfeln();
             System.out.println("Augenzahl: "+augenzahl);
 
-            //abfragen welche figur gezogen werden soll:
+            System.out.println("Welche Figur soll gezogen werden?");
             String figurName = scanner.next();
             //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
             zombieSchluempfe.bewegeFigur(figurName, augenzahl);
