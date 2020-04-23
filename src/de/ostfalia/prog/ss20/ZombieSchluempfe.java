@@ -11,8 +11,8 @@ import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZombieSchluempfe implements IZombieSchluempfe { 
-    
+public class ZombieSchluempfe implements IZombieSchluempfe {
+
     // TODO: 23.04.2020 fliege bewegt sich //fertig?
     // TODO: 23.04.2020 blütenfeld (11) einbauen, heilt schlümpfe //fertig
     // TODO: 23.04.2020 Die Kodierung der Figuren wird um Zombieschlümpfe erweitert, wie im Interface beschrieben?? was heißt das?
@@ -41,7 +41,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         spielerAmZug = spielerListe.get(0);
     }
 
-    public List<Feld> felderGenerieren(){
+    public List<Feld> felderGenerieren() {
         List<Feld> felder = new ArrayList<>();
         for (int x = 36; x >= 0; x--) {
             switch (x) {
@@ -93,9 +93,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         return felder;
     }
 
-    public void zugBeenden(){
+    public void zugBeenden() {
         int newIndex = spielerListe.indexOf(spielerAmZug) + 1;
-        if(newIndex >= spielerListe.size()){
+        if (newIndex >= spielerListe.size()) {
             newIndex = 0;
         }
         spielerAmZug = spielerListe.get(newIndex);
@@ -131,7 +131,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             String configName = config.substring(0, config.indexOf(":"));
             int feld;
             boolean istZombie;
-            if(config.contains(":Z")){
+            if (config.contains(":Z")) {
                 feld = Integer.parseInt(config.substring(config.indexOf(":") + 1, config.indexOf(":Z")));
                 istZombie = true;
             } else {
@@ -166,7 +166,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         //überprüfen ob abzweigung
                         if (schlumpf.getAktuellesFeld() == 3 || schlumpf.getAktuellesFeld() == 31) {
                             if (richtung == Richtung.WEITER) {
-                                schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + i);
+                                schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1);
                             } else if (schlumpf.getAktuellesFeld() == 3) {
                                 schlumpf.setAktuellesFeld(8);
                             } else if (schlumpf.getAktuellesFeld() == 31) {
@@ -178,32 +178,32 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         } else if (schlumpf.getAktuellesFeld() == 35) {
                             schlumpf.setAktuellesFeld(1);
                         } else {
-                            schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + i); //zieht feld für feld
+                            schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
                         }
 
                         //wenn schlumpf im ziel ist, ist zug beendet:
                         if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
                             zielfeld.addToZielListe(schlumpf);
-                            System.out.println(figurName+" ist nun im Ziel.");
+                            System.out.println(figurName + " ist nun im Ziel.");
                             return true;
                         }
 
                         //pro feld statusveränderungen anpassen:
-                        if (schlumpf.getAktuellesFeld()==11&&schlumpf.isIstZombie()){
+                        if (schlumpf.getAktuellesFeld() == 11 && schlumpf.isIstZombie()) {
                             schlumpf.setIstZombie(false);
-                            System.out.println("Das Blütenstaubfeld heilt Schlumpf "+figurName+". Er ist nun kein Zombie mehr.");
+                            System.out.println("Das Blütenstaubfeld heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
                         }
-                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()&&schlumpf.isIstZombie()) {
+                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld() && schlumpf.isIstZombie()) {
                             schlumpf.setIstZombie(false);
-                            System.out.println("Doc heilt Schlumpf "+figurName+". Er ist nun kein Zombie mehr.");
+                            System.out.println("Doc heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
                         }
-                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()&&!schlumpf.isIstZombie()) {
+                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie()) {
                             schlumpf.setIstZombie(true);
-                            System.out.println("Die Fliege beißt Schlumpf "+figurName+". Er ist nun ein Zombie.");
+                            System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
                         }
 
                     }
-                    System.out.println(figurName+" ist nun auf Feld "+schlumpf.getAktuellesFeld()+"."); //das nach jedem feld wechsel hinzufügen?
+                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + "."); //das nach jedem feld wechsel hinzufügen?
                     zugBeenden();
                     return true;
                 }
@@ -215,7 +215,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
-        return  bewegeFigur(figurName, augenzahl, Richtung.WEITER);
+        return bewegeFigur(figurName, augenzahl, Richtung.WEITER);
     }
 
 
@@ -255,7 +255,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public Farbe getFarbeAmZug() {
-        if(spielerAmZug != null){
+        if (spielerAmZug != null) {
             return spielerAmZug.getFarbe();
         }
         return null;
@@ -263,28 +263,28 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public Farbe gewinner() {
-        int counter=0;
-        for (Spieler spieler: spielerListe) { //für jeden spieler die liste durchsuchen
-            for (Schlumpf schlumpf:spieler.getSchlumpfListe()) {
-                if (schlumpf.getAktuellesFeld()==36){
+        int counter = 0;
+        for (Spieler spieler : spielerListe) { //für jeden spieler die liste durchsuchen
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                if (schlumpf.getAktuellesFeld() == 36) {
                     counter++;
                 }
             }
-            if (counter==4){ //spieler hat 4 schlümpfe im ziel, hat gewonnen
+            if (counter == 4) { //spieler hat 4 schlümpfe im ziel, hat gewonnen
                 return spieler.getSpielerFarbe();
             }
-            counter=0;
+            counter = 0;
         }
         return null;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String spielStatus = "Spielstatus: ";
-        for(Spieler spieler : spielerListe){
-            for(Schlumpf schlumpf : spieler.getSchlumpfListe()){
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                 spielStatus = spielStatus.concat(schlumpf.getName() + ":" + schlumpf.getAktuellesFeld());
-                if(schlumpf.isIstZombie()){
+                if (schlumpf.isIstZombie()) {
                     spielStatus = spielStatus.concat(":Z");
                 }
                 spielStatus = spielStatus.concat(", ");
@@ -292,14 +292,14 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
         //Bzz
         spielStatus = spielStatus.concat("Bzz:" + fliege.getAktuellesFeld());
-        if(fliege.getIstZombie()){
+        if (fliege.getIstZombie()) {
             spielStatus = spielStatus.concat(":Z");
         }
         spielStatus = spielStatus.concat(", ");
 
         //Doc
         spielStatus = spielStatus.concat("Doc:" + doc.getAktuellesFeld());
-        if(doc.getIstZombie()) {
+        if (doc.getIstZombie()) {
             spielStatus = spielStatus.concat(":Z");
         }
         return spielStatus;
