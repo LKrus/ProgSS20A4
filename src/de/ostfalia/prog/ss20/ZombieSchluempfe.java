@@ -158,54 +158,83 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl, Richtung richtung) {
-        for (Spieler spieler : spielerListe) {
-            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                if (schlumpf.getName().equals(figurName)) {
-                    for (int i = 1; i <= augenzahl; i++) {
+        // TODO: 23.04.2020 kürzer machen, fast alles doppelt
+        if (figurName.equals(fliege.getName())) {
+            //überprüfen ob abzweigung
+            if (fliege.getAktuellesFeld() == 3) {
+                if (richtung == Richtung.WEITER) {
+                    fliege.setAktuellesFeld(fliege.getAktuellesFeld() + augenzahl);
+                } else if (fliege.getAktuellesFeld() == 3) {
+                    fliege.setAktuellesFeld(8 + augenzahl - 1);
+                }
+            } else if (fliege.getAktuellesFeld() == 7) {
+                fliege.setAktuellesFeld(15 + augenzahl - 1);
+            } else if (fliege.getAktuellesFeld() == 35) {
+                fliege.setAktuellesFeld(1 + augenzahl - 1);
+            } else {
+                fliege.setAktuellesFeld(fliege.getAktuellesFeld() + augenzahl);
+            }
 
-                        //überprüfen ob abzweigung
-                        if (schlumpf.getAktuellesFeld() == 3 || schlumpf.getAktuellesFeld() == 31) {
-                            if (richtung == Richtung.WEITER) {
-                                schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1);
-                            } else if (schlumpf.getAktuellesFeld() == 3) {
-                                schlumpf.setAktuellesFeld(8);
-                            } else if (schlumpf.getAktuellesFeld() == 31) {
-                                schlumpf.setAktuellesFeld(36);
+            // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
+            for (Spieler spieler : spielerListe) {
+                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                    if (fliege.getAktuellesFeld() == schlumpf.getAktuellesFeld() && !schlumpf.isIstZombie()) {
+                        schlumpf.setIstZombie(true);
+                        System.out.println("Die Fliege beißt Schlumpf " + schlumpf.getName() + ". Er ist nun ein Zombie.");
+                    }
+                }
+            }
+
+        } else {
+            for (Spieler spieler : spielerListe) {
+                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                    if (schlumpf.getName().equals(figurName)) {
+                        for (int i = 1; i <= augenzahl; i++) {
+
+                            //überprüfen ob abzweigung
+                            if (schlumpf.getAktuellesFeld() == 3 || schlumpf.getAktuellesFeld() == 31) {
+                                if (richtung == Richtung.WEITER) {
+                                    schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1);
+                                } else if (schlumpf.getAktuellesFeld() == 3) {
+                                    schlumpf.setAktuellesFeld(8);
+                                } else if (schlumpf.getAktuellesFeld() == 31) {
+                                    schlumpf.setAktuellesFeld(36);
+                                }
+
+                            } else if (schlumpf.getAktuellesFeld() == 7) {
+                                schlumpf.setAktuellesFeld(15);
+                            } else if (schlumpf.getAktuellesFeld() == 35) {
+                                schlumpf.setAktuellesFeld(1);
+                            } else {
+                                schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
                             }
 
-                        } else if (schlumpf.getAktuellesFeld() == 7) {
-                            schlumpf.setAktuellesFeld(15);
-                        } else if (schlumpf.getAktuellesFeld() == 35) {
-                            schlumpf.setAktuellesFeld(1);
-                        } else {
-                            schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
-                        }
+                            //wenn schlumpf im ziel ist, ist zug beendet:
+                            if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
+                                zielfeld.addToZielListe(schlumpf);
+                                System.out.println(figurName + " ist nun im Ziel.");
+                                return true;
+                            }
 
-                        //wenn schlumpf im ziel ist, ist zug beendet:
-                        if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
-                            zielfeld.addToZielListe(schlumpf);
-                            System.out.println(figurName + " ist nun im Ziel.");
-                            return true;
-                        }
+                            //pro feld statusveränderungen anpassen:
+                            if (schlumpf.getAktuellesFeld() == 11 && schlumpf.isIstZombie()) {
+                                schlumpf.setIstZombie(false);
+                                System.out.println("Das Blütenstaubfeld heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
+                            }
+                            if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld() && schlumpf.isIstZombie()) {
+                                schlumpf.setIstZombie(false);
+                                System.out.println("Doc heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
+                            }
+                            if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie()) {
+                                schlumpf.setIstZombie(true);
+                                System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
+                            }
 
-                        //pro feld statusveränderungen anpassen:
-                        if (schlumpf.getAktuellesFeld() == 11 && schlumpf.isIstZombie()) {
-                            schlumpf.setIstZombie(false);
-                            System.out.println("Das Blütenstaubfeld heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
                         }
-                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld() && schlumpf.isIstZombie()) {
-                            schlumpf.setIstZombie(false);
-                            System.out.println("Doc heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
-                        }
-                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie()) {
-                            schlumpf.setIstZombie(true);
-                            System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
-                        }
-
+                        System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + "."); //das nach jedem feld wechsel hinzufügen?
+                        zugBeenden();
+                        return true;
                     }
-                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + "."); //das nach jedem feld wechsel hinzufügen?
-                    zugBeenden();
-                    return true;
                 }
             }
         }

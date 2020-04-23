@@ -29,7 +29,11 @@ public class Spiel {
                     augenzahl = zombieSchluempfe.wuerfeln();
                 }
                 System.out.println("Augenzahl der Fliege: " + augenzahl);
-                //fliege zieht, aber anders, fliegt über zwischenfelder hinweg und landet auf endfeld
+                //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
+
+                //fliege zieht, aber anders, fliegt über zwischenfelder hinweg und landet auf endfeld:
+                zombieSchluempfe.bewegeFigur("Fliege",augenzahl);
+
             }else{
                 System.out.println("Augenzahl: " + augenzahl);
 
