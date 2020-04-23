@@ -16,12 +16,13 @@ public class Spiel {
 
         ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(GELB, ROT);
 
-        Farbe farbeGewonnen = zombieSchluempfe.gewinner();
+        Farbe farbeGewonnen = zombieSchluempfe.gewinner(); //hier kommt grad null zurück
 
         while (null != farbeGewonnen) {
 
-            //spieler am zug festlegen (gelb)
-
+            // TODO: 23.04.2020 spieler am zug festlegen (gelb)
+            System.out.println("Es ist Spieler __ dran.");
+            //evtl hier auflistung, wo seine figuren grad stehen?
             int augenzahl = zombieSchluempfe.wuerfeln(); //6 = fliege
             if (augenzahl == 6) {
                 while (augenzahl == 6) {
@@ -33,7 +34,7 @@ public class Spiel {
                 System.out.println("Augenzahl: " + augenzahl);
 
                 System.out.println("Welche Figur soll gezogen werden?");
-                String figurName = scanner.next();
+                String figurName = scanner.next(); //fehlerhafte eingabe abfangen
                 //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
                 zombieSchluempfe.bewegeFigur(figurName, augenzahl);
             }
@@ -50,6 +51,4 @@ public class Spiel {
 ////        System.out.println(zombieSchluempfe.getSpielerListe().get(0).name);
 
     }
-
-
 }

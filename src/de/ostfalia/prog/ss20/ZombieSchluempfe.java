@@ -13,9 +13,9 @@ import java.util.List;
 
 public class ZombieSchluempfe implements IZombieSchluempfe { 
     
-    // TODO: 23.04.2020 fliege bewegt sich
-    // TODO: 23.04.2020 blütenfeld (11) einbauen, heilt schlümpfe 
-    // TODO: 23.04.2020 Die Kodierung der Figuren wird um Zombieschlümpfe erweitert, wie im Interface beschrieben?? 
+    // TODO: 23.04.2020 fliege bewegt sich //fertig?
+    // TODO: 23.04.2020 blütenfeld (11) einbauen, heilt schlümpfe //fertig
+    // TODO: 23.04.2020 Die Kodierung der Figuren wird um Zombieschlümpfe erweitert, wie im Interface beschrieben?? was heißt das?
     // TODO: 23.04.2020 kommandozeilen interface erstellen
     /*
     anzeige aktueller spieler + augenzahl
@@ -184,19 +184,26 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         //wenn schlumpf im ziel ist, ist zug beendet:
                         if (schlumpf.getAktuellesFeld() >= 36) { // >= statt == falls irgendwas schief läuft
                             zielfeld.addToZielListe(schlumpf);
+                            System.out.println(figurName+" ist nun im Ziel.");
                             return true;
                         }
 
                         //pro feld statusveränderungen anpassen:
-                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()) {
-                            schlumpf.setIstZombie(true);
-                            System.out.println(schlumpf.getName()+" ist Zombie");
-                        }
-                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()) {
+                        if (schlumpf.getAktuellesFeld()==11&&schlumpf.isIstZombie()){
                             schlumpf.setIstZombie(false);
-                            System.out.println(schlumpf.getName()+" ist kein Zombie");
+                            System.out.println("Das Blütenstaubfeld heilt Schlumpf "+figurName+". Er ist nun kein Zombie mehr.");
                         }
+                        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld()&&schlumpf.isIstZombie()) {
+                            schlumpf.setIstZombie(false);
+                            System.out.println("Doc heilt Schlumpf "+figurName+". Er ist nun kein Zombie mehr.");
+                        }
+                        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()&&!schlumpf.isIstZombie()) {
+                            schlumpf.setIstZombie(true);
+                            System.out.println("Die Fliege beißt Schlumpf "+figurName+". Er ist nun ein Zombie.");
+                        }
+
                     }
+                    System.out.println(figurName+" ist nun auf Feld "+schlumpf.getAktuellesFeld()+"."); //das nach jedem feld wechsel hinzufügen?
                     zugBeenden();
                     return true;
                 }
