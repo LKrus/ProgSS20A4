@@ -1,6 +1,7 @@
 package de.ostfalia.prog.ss20;
 
 import de.ostfalia.prog.ss20.enums.Farbe;
+import de.ostfalia.prog.ss20.enums.Richtung;
 
 import java.util.Scanner;
 
@@ -29,17 +30,30 @@ public class Spiel {
                     augenzahl = zombieSchluempfe.wuerfeln();
                 }
                 System.out.println("Augenzahl der Fliege: " + augenzahl);
+
                 //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
+                if (zombieSchluempfe.fliege.getAktuellesFeld() <= 3 && zombieSchluempfe.fliege.getAktuellesFeld() + augenzahl > 3) {
+                    System.out.println("In welche Richtung soll gezogen werden? WEITER oder ABZWEIGEN?");
+                    String richtungString = scanner.next();
+                    
+                    //geht das kürzer?
+                    if (richtungString.toUpperCase().equals(Richtung.WEITER)) {
+                        zombieSchluempfe.bewegeFigur("Fliege", augenzahl, Richtung.WEITER);
+                    } else if (richtungString.toUpperCase().equals(Richtung.ABZWEIGEN)) {
+                        zombieSchluempfe.bewegeFigur("Fliege", augenzahl, Richtung.ABZWEIGEN);
+                    }
+                } else {
+                    zombieSchluempfe.bewegeFigur("Fliege", augenzahl);
+                }
 
-                //fliege zieht, aber anders, fliegt über zwischenfelder hinweg und landet auf endfeld:
-                zombieSchluempfe.bewegeFigur("Fliege",augenzahl);
-
-            }else{
+            } else {
                 System.out.println("Augenzahl: " + augenzahl);
 
                 System.out.println("Welche Figur soll gezogen werden?");
-                String figurName = scanner.next(); //fehlerhafte eingabe abfangen
+                String figurName = scanner.next(); //fehlerhafte eingabe
+
                 //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
+
                 zombieSchluempfe.bewegeFigur(figurName, augenzahl);
             }
 
