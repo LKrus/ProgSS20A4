@@ -13,16 +13,7 @@ import java.util.List;
 
 public class ZombieSchluempfe implements IZombieSchluempfe {
 
-    // TODO: 23.04.2020 fliege bewegt sich //fertig?
-    // TODO: 23.04.2020 blütenfeld (11) einbauen, heilt schlümpfe //fertig
-    // TODO: 23.04.2020 Die Kodierung der Figuren wird um Zombieschlümpfe erweitert, wie im Interface beschrieben?? was heißt das?
-    // TODO: 23.04.2020 kommandozeilen interface erstellen
     /*
-    anzeige aktueller spieler + augenzahl
-    auswahl + ziehen einer figur, abfrae weiter/abbiegen, ausgabe der neuen positionen ----- fertig, wenn auch hässlich
-    feststellen, wenn ein spieler gewonnen hat
-    eingabe validierung
-    fehlerausgaben bei ungültigen zügen
     debugging/cheatbefehle, um bestimmte spielsituationen herstellen zu können
      */
 
@@ -164,7 +155,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     public boolean bewegeFigur(String figurName, int augenzahl, Richtung richtung) {
 
         if(gewinner() == null) {
-            // TODO: 23.04.2020 kürzer machen, fast alles doppelt
             if (figurName.equals(fliege.getName())) {
                 //überprüfen ob Abzweigung
 
@@ -197,6 +187,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         }
                     }
                 }
+                System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
                 zugBeenden();
                 return true;
             } else {
@@ -255,8 +246,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                         schlumpf.setIstZombie(true);
                                     }
                                 }
+                                System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
                             }
-                            System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + "."); //das nach jedem feld wechsel hinzufügen?
                             zugBeenden();
                             return true;
                         }
