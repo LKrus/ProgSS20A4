@@ -7,6 +7,7 @@ import de.ostfalia.prog.ss20.figuren.Schlumpf;
 import java.util.Scanner;
 
 import static de.ostfalia.prog.ss20.enums.Farbe.*;
+import static de.ostfalia.prog.ss20.enums.Richtung.ABZWEIGEN;
 
 /**
  * Controller
@@ -16,17 +17,24 @@ public class Spiel {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(GELB, ROT);
+        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe("BLAU-A:30, BLAU-B:28, BLAU-C:30, BLAU-D:28, GELB-A:30, GELB-B:28, GELB-C:30, GELB-D:28, Bzz:20, Doc:29", BLAU, GELB);
 
-        Farbe farbeGewonnen = zombieSchluempfe.gewinner(); //hier kommt grad null zurück
+        zombieSchluempfe.bewegeFigur("BLAU-A", 2, ABZWEIGEN);
+        zombieSchluempfe.bewegeFigur("GELB-A", 2, ABZWEIGEN);
+        zombieSchluempfe.bewegeFigur("BLAU-B", 4, ABZWEIGEN);
+        zombieSchluempfe.bewegeFigur("GELB-B", 4, ABZWEIGEN);
+        zombieSchluempfe.bewegeFigur("BLAU-C", 2, ABZWEIGEN);
+        zombieSchluempfe.bewegeFigur("GELB-C", 2, ABZWEIGEN);
+
+        System.out.println(zombieSchluempfe.toString());
+        System.out.println(zombieSchluempfe.gewinner());
+
+        /*Farbe farbeGewonnen = zombieSchluempfe.gewinner(); //hier kommt grad null zurück
 
         while (null != farbeGewonnen) {
+            System.out.println("Es ist Spieler " + zombieSchluempfe.getFarbeAmZug() + " dran.");
 
-            // TODO: 23.04.2020 spieler am zug festlegen (gelb)
-
-            System.out.println("Es ist Spieler __ dran.");
-
-            //evtl hier auflistung, wo seine figuren grad stehen?
+            //System.out.println(zombieSchluempfe.toString());
 
             int augenzahl = zombieSchluempfe.wuerfeln(); //6 = fliege
             if (augenzahl == 6) {
@@ -81,11 +89,9 @@ public class Spiel {
                     }
                 }
             }
-
-
-            //spieler am zug +1
         }
         System.out.println(farbeGewonnen + " hat gewonnen");
+         */
 
 
 //        ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(BLAU, ROT);

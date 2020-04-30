@@ -1,5 +1,7 @@
 package de.ostfalia.prog.ss20.figuren;
 
+import java.util.List;
+
 public class Fliege extends NPC {
     private int aktuellesFeld;
     private boolean istZombie = true;
@@ -28,8 +30,4 @@ public class Fliege extends NPC {
         return istZombie;
     }
 
-    @Override
-    public void wirken(){
-
-    }
 }
