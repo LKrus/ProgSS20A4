@@ -2,7 +2,11 @@ package de.ostfalia.prog.ss20;
 
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
-import de.ostfalia.prog.ss20.felder.*;
+import de.ostfalia.prog.ss20.felder.Feld;
+import de.ostfalia.prog.ss20.felder.Normalfeld;
+import de.ostfalia.prog.ss20.felder.Spezialfeld;
+import de.ostfalia.prog.ss20.felder.Startfeld;
+import de.ostfalia.prog.ss20.felder.Zielfeld;
 import de.ostfalia.prog.ss20.figuren.Doc;
 import de.ostfalia.prog.ss20.figuren.Fliege;
 import de.ostfalia.prog.ss20.figuren.Schlumpf;
@@ -156,38 +160,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         if(gewinner() == null) {
             if (figurName.equals(fliege.getName())) {
-                //überprüfen ob Abzweigung
-
-                if (fliege.getName().equals(figurName)) {
-                    for (int i = 1; i <= augenzahl; i++) {
-                        //überprüfen ob abzweigung
-                        if (fliege.getAktuellesFeld() == 3) {
-                            if (richtung == Richtung.WEITER) {
-                                fliege.setAktuellesFeld(fliege.getAktuellesFeld() + 1);
-                            } else {
-                                fliege.setAktuellesFeld(8);
-                            }
-                        } else if (fliege.getAktuellesFeld() == 7) {
-                            fliege.setAktuellesFeld(15);
-                        } else if (fliege.getAktuellesFeld() == 35) {
-                            fliege.setAktuellesFeld(1);
-                        } else {
-                            fliege.setAktuellesFeld(fliege.getAktuellesFeld() + 1); //zieht feld für feld
-                        }
-                    }
-                }
-
-                // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
-                for (Spieler spieler : spielerListe) {
-                    for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                        if (fliege.getAktuellesFeld() == schlumpf.getAktuellesFeld() && !schlumpf.isIstZombie()) {
-                            schlumpf.setIstZombie(true);
-                            zombieSchluempfe.add(schlumpf);
-                            System.out.println("Die Fliege beißt Schlumpf " + schlumpf.getName() + ". Er ist nun ein Zombie.");
-                        }
-                    }
-                }
-                System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
+                fliegeBewegung(augenzahl, richtung);
                 zugBeenden();
                 return true;
             } else {
@@ -229,7 +202,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                 if (schlumpf.getAktuellesFeld() == 11 && schlumpf.isIstZombie()) {
                                     schlumpf.setIstZombie(false);
                                     zombieSchluempfe.remove(schlumpf);
-                                    System.out.println("Das Blütenstaubfeld heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
+                                    System.out.println("Das Blütenstaubfeld heilt " + figurName + ". Er ist nun kein Zombie mehr.");
                                 }
                                 if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld() && schlumpf.isIstZombie()) {
                                     schlumpf.setIstZombie(false);
@@ -256,6 +229,38 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
         return false;
+    }
+
+    public void fliegeBewegung(int augenzahl, Richtung richtung){
+        //überprüfen ob Abzweigung
+        for (int i = 1; i <= augenzahl; i++) {
+            //überprüfen ob abzweigung
+            if (fliege.getAktuellesFeld() == 3) {
+                if (richtung == Richtung.WEITER) {
+                    fliege.setAktuellesFeld(fliege.getAktuellesFeld() + 1);
+                } else {
+                    fliege.setAktuellesFeld(8);
+                }
+            } else if (fliege.getAktuellesFeld() == 7) {
+                fliege.setAktuellesFeld(15);
+            } else if (fliege.getAktuellesFeld() == 35) {
+                fliege.setAktuellesFeld(1);
+            } else {
+                fliege.setAktuellesFeld(fliege.getAktuellesFeld() + 1); //zieht feld für feld
+            }
+        }
+
+        // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                if (fliege.getAktuellesFeld() == schlumpf.getAktuellesFeld() && !schlumpf.isIstZombie()) {
+                    schlumpf.setIstZombie(true);
+                    zombieSchluempfe.add(schlumpf);
+                    System.out.println("Die Fliege beißt Schlumpf " + schlumpf.getName() + ". Er ist nun ein Zombie.");
+                }
+            }
+        }
+        System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
     }
 
 

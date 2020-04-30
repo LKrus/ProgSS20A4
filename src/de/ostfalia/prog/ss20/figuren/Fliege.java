@@ -1,7 +1,5 @@
 package de.ostfalia.prog.ss20.figuren;
 
-import java.util.List;
-
 public class Fliege extends NPC {
     private int aktuellesFeld;
     private boolean istZombie = true;
