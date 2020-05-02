@@ -2,6 +2,9 @@ package de.ostfalia.prog.ss20;
 
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
+import de.ostfalia.prog.ss20.exceptions.FalscheSpielerzahlException;
+import de.ostfalia.prog.ss20.exceptions.UngueltigePositionException;
+import de.ostfalia.prog.ss20.exceptions.WiederholteFarbenException;
 import de.ostfalia.prog.ss20.felder.Feld;
 import de.ostfalia.prog.ss20.felder.Normalfeld;
 import de.ostfalia.prog.ss20.felder.Spezialfeld;
@@ -421,11 +424,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 playerCounter++;
             }
             if (playerCounter == 0) {
-                throw new FalscheSpielerZahlException("Not enough players. Minimum is 1.");
+                throw new FalscheSpielerzahlException("Not enough players. Minimum is 1.");
             } else if (playerCounter > 4) {
-                throw new FalscheSpielerZahlException("Too many players. Maximum is 4.");
+                throw new FalscheSpielerzahlException("Too many players. Maximum is 4.");
             }
-        } catch (FalscheSpielerZahlException f){
+        } catch (FalscheSpielerzahlException f){
             System.err.println(f.getMessage());
         } catch (WiederholteFarbenException w){
             System.err.println(w.getMessage());
