@@ -360,6 +360,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         if (fliege.getAktuellesFeld() == doc.getAktuellesFeld()) {
             System.out.println("Bzz bleibt nicht auf Docs Labor.");
             fliege.setAktuellesFeld(ursprungsfeld);
+        }else if(fliege.getAktuellesFeld()==11){
+            System.out.println("Fliege bleibt nicht auf Blütenstaubfeld.");
+            fliege.setAktuellesFeld(ursprungsfeld);
         } else {
 
             // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
