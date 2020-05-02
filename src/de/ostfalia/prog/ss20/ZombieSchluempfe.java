@@ -29,6 +29,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     Fliege fliege;
     Doc doc;
     Zielfeld zielfeld;
+    boolean istBlauImSpiel = false, istRotImSpiel = false, istGelbImSpiel = false, istGruenImSpiel = false;
     Schlumpfine schlumpfine;
 
 
@@ -106,9 +107,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     public ZombieSchluempfe(Farbe... farben) {
         //je nachdem wie viele Farben, so viele Spieler
-        for (Farbe farbe : farben) {
-            spielerListe.add(new Spieler(farbe));
-        }
+        spielerHinzufügen(farben);
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
@@ -118,9 +117,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
-        for (Farbe farbe : farben) {
-            spielerListe.add(new Spieler(farbe));
-        }
+        spielerHinzufügen(farben);
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
@@ -364,4 +361,52 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     public List<Spieler> getSpielerListe() {
         return spielerListe;
     }
+    public void spielerHinzufügen(Farbe... farben){
+        int playerCounter = 0;
+        try {
+            for (Farbe farbe : farben) {
+                spielerListe.add(new Spieler(farbe));
+                switch (farbe) {
+                    case GRUEN:
+                        if (istGruenImSpiel) {
+                            throw new WiederholteFarbenException("Grün wurde zweimal hinzugefügt.");
+                        }
+                        istGruenImSpiel = true;
+                        break;
+                    case ROT:
+                        if (istRotImSpiel) {
+                            throw new WiederholteFarbenException("Rot wurde zweimal hinzugefügt.");
+                        }
+                        istRotImSpiel = true;
+                        break;
+                    case BLAU:
+                        if (istBlauImSpiel) {
+                            throw new WiederholteFarbenException("Blau wurde zweimal hinzugefügt.");
+                        }
+                        istBlauImSpiel = true;
+                        break;
+                    case GELB:
+                        if (istGelbImSpiel) {
+                            throw new WiederholteFarbenException("Gelb wurde zweimal hinzugefügt.");
+                        }
+                        istGelbImSpiel = true;
+                        break;
+                    default:
+                        System.err.println("ERROR 002: UNKNOWN COLOUR IN CONSTRUCTOR");
+                        break;
+                }
+                playerCounter++;
+            }
+            if (playerCounter == 0) {
+                throw new FalscheSpielerZahlException("Not enough players. Minimum is 1.");
+            } else if (playerCounter > 4) {
+                throw new FalscheSpielerZahlException("Too many players. Maximum is 4.");
+            }
+        } catch (FalscheSpielerZahlException f){
+            System.err.println(f.getMessage());
+        } catch (WiederholteFarbenException w){
+            System.err.println(w.getMessage());
+        }
+    }
+
 }
