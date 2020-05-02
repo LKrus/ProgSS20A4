@@ -26,6 +26,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     private List<Spieler> spielerListe = new ArrayList<>();
     private List<Schlumpf> zombieSchluempfe = new ArrayList<>();
     private Spieler spielerAmZug;
+    private int[] flussFeldNummern = {16, 17, 25, 26, 27};
     Fliege fliege;
     Doc doc;
     Zielfeld zielfeld;
@@ -113,7 +114,30 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         fliege = new Fliege("Bzz", 20);
         schlumpfine = new Schlumpfine("Schlumpfine",1);
 
+        testeValidePositionierung();
+
         initialisieren();
+    }
+
+    private void testeValidePositionierung() {
+        try {
+            for (int n : flussFeldNummern) {
+                if (doc.getAktuellesFeld() == n || fliege.getAktuellesFeld() == n) {
+                    throw new UngueltigePositionException("Fliege oder Oberschlumpf stehen auf einem für sie nicht vorgesehenen Feld.");
+                }
+            }
+            if (doc.getAktuellesFeld() == fliege.getAktuellesFeld()){
+                throw new UngueltigePositionException("Fliege und Doc können nicht auf dem selben Feld beginnen.");
+            }
+            if(fliege.getAktuellesFeld() == 11){
+                throw new UngueltigePositionException("Fliege kann nicht auf der Tuberose(Feld 11) landen.");
+            }
+            if(fliege.getAktuellesFeld() == 0 || fliege.getAktuellesFeld() == 36){
+                throw new UngueltigePositionException("Fliege kann weder auf dem Start- noch auf dem Zielfeld des Spiels starten.");
+            }
+        } catch(UngueltigePositionException u){
+            System.err.println(u.getMessage());
+        }
     }
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
@@ -265,12 +289,10 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
     }
 
-
     @Override
     public boolean bewegeFigur(String figurName, int augenzahl) {
         return bewegeFigur(figurName, augenzahl, Richtung.WEITER);
     }
-
 
     @Override
     public int getFeldnummer(String figurName) {
@@ -361,7 +383,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     public List<Spieler> getSpielerListe() {
         return spielerListe;
     }
-    public void spielerHinzufügen(Farbe... farben){
+
+    private void spielerHinzufügen(Farbe... farben){
         int playerCounter = 0;
         try {
             for (Farbe farbe : farben) {
