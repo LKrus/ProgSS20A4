@@ -138,20 +138,20 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 throw new UngueltigePositionException("Fliege kann weder auf dem Start- noch auf dem Zielfeld des Spiels starten.");
             }
             if(fliege.getAktuellesFeld() < 0 || fliege.getAktuellesFeld() > 36){
-                throw new UngueltigePositionException();
+                throw new UngueltigePositionException("Fliege nicht auf Spielbrett.");
             }
             if(doc.getAktuellesFeld() < 0 || doc.getAktuellesFeld() > 36){
-                throw new UngueltigePositionException();
+                throw new UngueltigePositionException("Oberschlumpf nicht auf Spielbrett.");
             }
             for(Spieler spieler : spielerListe) {
                 for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                     for (int n : flussFeldNummern) {
                         if (schlumpf.getAktuellesFeld() == n) {
-                            throw new UngueltigePositionException();
+                            throw new UngueltigePositionException("Schlumpf auf Flussfeld.");
                         }
                     }
                     if (schlumpf.getAktuellesFeld() < 0 || schlumpf.getAktuellesFeld() > 36) {
-                        throw new UngueltigePositionException();
+                        throw new UngueltigePositionException("Schlumpf nicht auf Spielbrett.");
                     }
                 }
             }
