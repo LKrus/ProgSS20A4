@@ -2,6 +2,8 @@ package de.ostfalia.prog.ss20;
 
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
+import de.ostfalia.prog.ss20.exceptions.FalscheSpielerzahlException;
+import de.ostfalia.prog.ss20.exceptions.WiederholteFarbenException;
 import de.ostfalia.prog.ss20.figuren.Schlumpf;
 
 import java.util.InputMismatchException;
@@ -20,12 +22,12 @@ public class Spiel {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        ingame(setupGame());
+        //ingame(setupGame());
         //ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe("GELB-A:90, GELB-B:0, GELB-C:0, GELB-D:0, Bzz:20, Doc:29", GELB);
     }
 
 
-    public static ZombieSchluempfe setupGame(){
+    public static ZombieSchluempfe setupGame() throws FalscheSpielerzahlException, WiederholteFarbenException {
         ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(GELB);
 
         System.out.println("Wie viele Spieler soll Ihr Spiel haben?\n" +

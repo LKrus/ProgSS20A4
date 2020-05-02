@@ -109,15 +109,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         return (int) (Math.random() * 7) + 1;
     }
 
-    public ZombieSchluempfe(Farbe... farben) {
+    public ZombieSchluempfe(Farbe... farben) throws FalscheSpielerzahlException, WiederholteFarbenException{
         //je nachdem wie viele Farben, so viele Spieler
-        try {
-            spielerHinzufügen(farben);
-        } catch(WiederholteFarbenException w){
-            System.err.println(w.toString());
-        } catch(FalscheSpielerzahlException f){
-            System.err.println(f.toString());
-        }
+        spielerHinzufügen(farben);
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
@@ -158,20 +152,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
     }
 
-    public ZombieSchluempfe(String conf, Farbe... farben) {
-        try {
-            spielerHinzufügen(farben);
-        } catch(WiederholteFarbenException w){
-            System.err.println(w.toString());
-        } catch(FalscheSpielerzahlException f){
-            System.err.println(f.toString());
-        }
+    public ZombieSchluempfe(String conf, Farbe... farben) throws WiederholteFarbenException, FalscheSpielerzahlException{
+        spielerHinzufügen(farben);
 
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
         schlumpfine = new Schlumpfine("Schlumpfine", 1);
 
+        int gelbFiguren = 0;
+        int rotFiguren = 0;
+        int blauFiguren = 0;
+        int gruenFiguren = 0;
         //conf aufspalten:
         String[] confs = conf.split(", ");
         for (String config : confs) {
@@ -201,6 +193,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 fliege.setAktuellesFeld(feld);
             } else if (configName.contentEquals("Doc")) {
                 doc.setAktuellesFeld(feld);
+            }
+            if(configName.contains("GELB")){
+                gelbFiguren++;
+            } else if(configName.contains("ROT")){
+                rotFiguren++;
+            } else if(configName.contains("BLAU")){
+                blauFiguren++;
+            } else if(configName.contains("GRUEN")){
+                gruenFiguren++;
+            }
+            if(gelbFiguren > 4 || rotFiguren > 4 || blauFiguren > 4 || gruenFiguren > 4){
+                throw new WiederholteFarbenException("Mehr als 4 FIguren einer Farbe.");
             }
         }
 
@@ -503,32 +507,33 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         return spielerListe;
     }
 
-    private void spielerHinzufügen(Farbe... farben) throws WiederholteFarbenException, FalscheSpielerzahlException {
+    private void spielerHinzufügen(Farbe... farben) throws FalscheSpielerzahlException,WiederholteFarbenException {
         int playerCounter = 0;
+        boolean istWiederholteFarbe = false;
         for (Farbe farbe : farben) {
             spielerListe.add(new Spieler(farbe));
             switch (farbe) {
                 case GRUEN:
                     if (istGruenImSpiel) {
-                        throw new WiederholteFarbenException("Grün wurde zweimal hinzugefügt.");
+                        istWiederholteFarbe = true;
                     }
                     istGruenImSpiel = true;
                     break;
                 case ROT:
                     if (istRotImSpiel) {
-                        throw new WiederholteFarbenException("Rot wurde zweimal hinzugefügt.");
+                        istWiederholteFarbe = true;
                     }
                     istRotImSpiel = true;
                     break;
                 case BLAU:
                     if (istBlauImSpiel) {
-                        throw new WiederholteFarbenException("Blau wurde zweimal hinzugefügt.");
+                        istWiederholteFarbe = true;
                     }
                     istBlauImSpiel = true;
                     break;
                 case GELB:
                     if (istGelbImSpiel) {
-                        throw new WiederholteFarbenException("Gelb wurde zweimal hinzugefügt.");
+                        istWiederholteFarbe = true;
                     }
                     istGelbImSpiel = true;
                     break;
@@ -542,6 +547,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             throw new FalscheSpielerzahlException("Not enough players. Minimum is 1.");
         } else if (playerCounter > 4) {
             throw new FalscheSpielerzahlException("Too many players. Maximum is 4.");
+        }
+        if(istWiederholteFarbe){
+            throw new WiederholteFarbenException("Eine Farbe wurde mehrfach genannt.");
         }
     }
 
