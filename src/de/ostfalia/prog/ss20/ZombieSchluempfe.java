@@ -362,19 +362,25 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
-            if (schlumpfine.getAktuellesFeld() == 3) {
+            if (schlumpfine.getAktuellesFeld() == 3 || schlumpfine.getAktuellesFeld()==31) {
                 if (richtung == Richtung.WEITER) {
                     schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1);
-                } else {
+                } else if(schlumpfine.getAktuellesFeld()==3){
                     schlumpfine.setAktuellesFeld(8);
+                }else if (schlumpfine.getAktuellesFeld() == 31) {
+                    schlumpfine.setAktuellesFeld(36);
                 }
+
             } else if (schlumpfine.getAktuellesFeld() == 7) {
                 schlumpfine.setAktuellesFeld(15);
             } else if (schlumpfine.getAktuellesFeld() == 35) {
                 schlumpfine.setAktuellesFeld(1);
-            } else {
+            }else if (schlumpfine.getAktuellesFeld()==36){
+                schlumpfine.setAktuellesFeld(1);
+            }else {
                 schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1); //zieht feld für feld
             }
+
 
             // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
             if (schlumpfine.getAktuellesFeld() != 24) { //auf PilzFeld hat Schlumpfine keine Wirkung
