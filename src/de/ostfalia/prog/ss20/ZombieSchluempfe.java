@@ -336,12 +336,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
-            if (fliege.getAktuellesFeld() == 3) {
+            if (fliege.getAktuellesFeld() == 3||fliege.getAktuellesFeld()==31) {
                 if (richtung == Richtung.WEITER) {
                     fliege.setAktuellesFeld(fliege.getAktuellesFeld() + 1);
-                } else {
+                } else if (fliege.getAktuellesFeld()==3){
                     fliege.setAktuellesFeld(8);
+                }else if (fliege.getAktuellesFeld()==31){
+                    System.out.println("Die Fliege darf nicht ins Dorf.");
+                    fliege.setAktuellesFeld(ursprungsfeld);
+                    System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
+                    zugBeenden();
                 }
+
             } else if (fliege.getAktuellesFeld() == 7) {
                 fliege.setAktuellesFeld(15);
             } else if (fliege.getAktuellesFeld() == 35) {
