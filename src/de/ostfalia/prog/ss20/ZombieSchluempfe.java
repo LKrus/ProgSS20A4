@@ -111,7 +111,13 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     public ZombieSchluempfe(Farbe... farben) {
         //je nachdem wie viele Farben, so viele Spieler
-        spielerHinzufügen(farben);
+        try {
+            spielerHinzufügen(farben);
+        } catch(WiederholteFarbenException w){
+            System.err.println(w.toString());
+        } catch(FalscheSpielerzahlException f){
+            System.err.println(f.toString());
+        }
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
@@ -123,37 +129,44 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     private void testeValidePositionierung() {
-            if (doc.getAktuellesFeld() == fliege.getAktuellesFeld()) {
-                throw new UngueltigePositionException("Fliege und Doc können nicht auf dem selben Feld beginnen.");
-            }
-            if (fliege.getAktuellesFeld() == 11) {
-                throw new UngueltigePositionException("Fliege kann nicht auf der Tuberose(Feld 11) landen.");
-            }
-            if (fliege.getAktuellesFeld() == 0 || fliege.getAktuellesFeld() == 36) {
-                throw new UngueltigePositionException("Fliege kann weder auf dem Start- noch auf dem Zielfeld des Spiels starten.");
-            }
-            if(fliege.getAktuellesFeld() < 0 || fliege.getAktuellesFeld() > 36){
-                throw new UngueltigePositionException("Fliege nicht auf Spielbrett.");
-            }
-            if(doc.getAktuellesFeld() < 0 || doc.getAktuellesFeld() > 36){
-                throw new UngueltigePositionException("Oberschlumpf nicht auf Spielbrett.");
-            }
-            for(Spieler spieler : spielerListe) {
-                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                    for (int n : flussFeldNummern) {
-                        if (schlumpf.getAktuellesFeld() == n) {
-                            throw new UngueltigePositionException("Schlumpf auf Flussfeld.");
-                        }
-                    }
-                    if (schlumpf.getAktuellesFeld() < 0 || schlumpf.getAktuellesFeld() > 36) {
-                        throw new UngueltigePositionException("Schlumpf nicht auf Spielbrett.");
+        if (doc.getAktuellesFeld() == fliege.getAktuellesFeld()) {
+            throw new UngueltigePositionException("Fliege und Doc können nicht auf dem selben Feld beginnen.");
+        }
+        if (fliege.getAktuellesFeld() == 11) {
+            throw new UngueltigePositionException("Fliege kann nicht auf der Tuberose(Feld 11) landen.");
+        }
+        if (fliege.getAktuellesFeld() == 0 || fliege.getAktuellesFeld() == 36) {
+            throw new UngueltigePositionException("Fliege kann weder auf dem Start- noch auf dem Zielfeld des Spiels starten.");
+        }
+        if (fliege.getAktuellesFeld() < 0 || fliege.getAktuellesFeld() > 36) {
+            throw new UngueltigePositionException("Fliege nicht auf Spielbrett.");
+        }
+        if (doc.getAktuellesFeld() < 0 || doc.getAktuellesFeld() > 36) {
+            throw new UngueltigePositionException("Oberschlumpf nicht auf Spielbrett.");
+        }
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                for (int n : flussFeldNummern) {
+                    if (schlumpf.getAktuellesFeld() == n) {
+                        throw new UngueltigePositionException("Schlumpf auf Flussfeld.");
                     }
                 }
+                if (schlumpf.getAktuellesFeld() < 0 || schlumpf.getAktuellesFeld() > 36) {
+                    throw new UngueltigePositionException("Schlumpf nicht auf Spielbrett.");
+                }
             }
+        }
     }
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
-        spielerHinzufügen(farben);
+        try {
+            spielerHinzufügen(farben);
+        } catch(WiederholteFarbenException w){
+            System.err.println(w.toString());
+        } catch(FalscheSpielerzahlException f){
+            System.err.println(f.toString());
+        }
+
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
@@ -270,8 +283,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                     return true;
                                 }
                                 //wenn letztes feld pilzfeld ist
-                                if (i==augenzahl&&schlumpf.getAktuellesFeld()==24&&schlumpf.isIstZombie()){
-                                    System.out.println("Schlumpf "+figurName+" wird vom Pilzfeld geheilt. Er ist nun kein Zombie mehr.");
+                                if (i == augenzahl && schlumpf.getAktuellesFeld() == 24 && schlumpf.isIstZombie()) {
+                                    System.out.println("Schlumpf " + figurName + " wird vom Pilzfeld geheilt. Er ist nun kein Zombie mehr.");
                                     schlumpf.setIstZombie(false);
                                     zombieSchluempfe.remove(schlumpf);
                                     schlumpf.setAktuellesFeld(1);
@@ -484,51 +497,45 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         return spielerListe;
     }
 
-    private void spielerHinzufügen(Farbe... farben) {
+    private void spielerHinzufügen(Farbe... farben) throws WiederholteFarbenException, FalscheSpielerzahlException {
         int playerCounter = 0;
-        try {
-            for (Farbe farbe : farben) {
-                spielerListe.add(new Spieler(farbe));
-                switch (farbe) {
-                    case GRUEN:
-                        if (istGruenImSpiel) {
-                            throw new WiederholteFarbenException("Grün wurde zweimal hinzugefügt.");
-                        }
-                        istGruenImSpiel = true;
-                        break;
-                    case ROT:
-                        if (istRotImSpiel) {
-                            throw new WiederholteFarbenException("Rot wurde zweimal hinzugefügt.");
-                        }
-                        istRotImSpiel = true;
-                        break;
-                    case BLAU:
-                        if (istBlauImSpiel) {
-                            throw new WiederholteFarbenException("Blau wurde zweimal hinzugefügt.");
-                        }
-                        istBlauImSpiel = true;
-                        break;
-                    case GELB:
-                        if (istGelbImSpiel) {
-                            throw new WiederholteFarbenException("Gelb wurde zweimal hinzugefügt.");
-                        }
-                        istGelbImSpiel = true;
-                        break;
-                    default:
-                        System.err.println("ERROR 002: UNKNOWN COLOUR IN CONSTRUCTOR");
-                        break;
-                }
-                playerCounter++;
+        for (Farbe farbe : farben) {
+            spielerListe.add(new Spieler(farbe));
+            switch (farbe) {
+                case GRUEN:
+                    if (istGruenImSpiel) {
+                        throw new WiederholteFarbenException("Grün wurde zweimal hinzugefügt.");
+                    }
+                    istGruenImSpiel = true;
+                    break;
+                case ROT:
+                    if (istRotImSpiel) {
+                        throw new WiederholteFarbenException("Rot wurde zweimal hinzugefügt.");
+                    }
+                    istRotImSpiel = true;
+                    break;
+                case BLAU:
+                    if (istBlauImSpiel) {
+                        throw new WiederholteFarbenException("Blau wurde zweimal hinzugefügt.");
+                    }
+                    istBlauImSpiel = true;
+                    break;
+                case GELB:
+                    if (istGelbImSpiel) {
+                        throw new WiederholteFarbenException("Gelb wurde zweimal hinzugefügt.");
+                    }
+                    istGelbImSpiel = true;
+                    break;
+                default:
+                    System.err.println("ERROR 002: UNKNOWN COLOUR IN CONSTRUCTOR");
+                    break;
             }
-            if (playerCounter == 0) {
-                throw new FalscheSpielerzahlException("Not enough players. Minimum is 1.");
-            } else if (playerCounter > 4) {
-                throw new FalscheSpielerzahlException("Too many players. Maximum is 4.");
-            }
-        } catch (FalscheSpielerzahlException f) {
-            System.err.println(f.getMessage());
-        } catch (WiederholteFarbenException w) {
-            System.err.println(w.getMessage());
+            playerCounter++;
+        }
+        if (playerCounter == 0) {
+            throw new FalscheSpielerzahlException("Not enough players. Minimum is 1.");
+        } else if (playerCounter > 4) {
+            throw new FalscheSpielerzahlException("Too many players. Maximum is 4.");
         }
     }
 
