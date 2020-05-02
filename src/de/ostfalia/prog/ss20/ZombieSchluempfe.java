@@ -218,6 +218,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                     zombieSchluempfe.add(schlumpf);
                                     System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
                                 }
+                                if (schlumpf.getAktuellesFeld()==schlumpfine.getAktuellesFeld()&& schlumpf.isIstZombie()){
+                                    schlumpf.setIstZombie(false);
+                                    zombieSchluempfe.remove(schlumpf);
+                                    System.out.println("Die Schlumpfine heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
+                                }
                                 for (Schlumpf schlumpf2 : zombieSchluempfe) {
                                     if (schlumpf.getAktuellesFeld() == schlumpf2.getAktuellesFeld()) {
                                         schlumpf.setIstZombie(true);
@@ -292,7 +297,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                     if (schlumpfine.getAktuellesFeld() == schlumpf.getAktuellesFeld() && schlumpf.isIstZombie()) {
                         schlumpf.setIstZombie(false);
                         zombieSchluempfe.remove(schlumpf);
-                        System.out.println("Die Schlumpfine heilt Schlumpf " + schlumpf.getName() + ". Er ist nun kein Zombie.");
+                        System.out.println("Die Schlumpfine heilt Schlumpf " + schlumpf.getName() + ". Er ist nun kein Zombie mehr.");
                     }
                 }
             }
