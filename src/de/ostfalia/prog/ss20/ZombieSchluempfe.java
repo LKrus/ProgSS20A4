@@ -123,11 +123,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     private void testeValidePositionierung() {
-            for (int n : flussFeldNummern) {
-                if (doc.getAktuellesFeld() == n || fliege.getAktuellesFeld() == n) {
-                    throw new UngueltigePositionException("Fliege oder Oberschlumpf stehen auf einem für sie nicht vorgesehenen Feld.");
-                }
-            }
             if (doc.getAktuellesFeld() == fliege.getAktuellesFeld()) {
                 throw new UngueltigePositionException("Fliege und Doc können nicht auf dem selben Feld beginnen.");
             }
