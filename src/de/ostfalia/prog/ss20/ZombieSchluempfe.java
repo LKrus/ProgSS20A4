@@ -193,18 +193,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 zugBeenden();
                 return true;
             } else if (figurName.equals(schlumpfine.getName())) {
-                schlumpfineBewegung(augenzahl,richtung);
+                schlumpfineBewegung(augenzahl, richtung);
                 zugBeenden();
                 return true;
             } else {
                 for (Spieler spieler : spielerListe) {
                     for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                         if (schlumpf.getName().equals(figurName)) {
-                            int ursprungsFeld=schlumpf.getAktuellesFeld();
+                            int ursprungsFeld = schlumpf.getAktuellesFeld();
                             boolean ursprungsObIstZombie = schlumpf.isIstZombie();
 
                             if (schlumpf.getAktuellesFeld() == 36) {
-                                System.out.println("Schlumpf "+figurName+" ist bereits im Dorf und kann nicht mehr bewegt werden.");
+                                System.out.println("Schlumpf " + figurName + " ist bereits im Dorf und kann nicht mehr bewegt werden.");
                                 zugBeenden();
                                 return true;
                             }
@@ -228,20 +228,32 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                 }
 
                                 //wenn schlumpf im ziel ist, ist zug beendet:
-                                if (schlumpf.getAktuellesFeld() == 36) {
+                                if (!schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() == 36) {
                                     zielfeld.addToZielListe(schlumpf);
                                     System.out.println(figurName + " ist nun im Ziel.");
                                     zugBeenden();
                                     return true;
                                 }
+                                //zombieschlumpf darf nicht ins ziel
+                                else if (schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() == 36) {
+                                    System.out.println("Ein Zombieschlumpf darf nicht ins Dorf.");
+                                    schlumpf.setAktuellesFeld(ursprungsFeld);
+                                    schlumpf.setIstZombie(ursprungsObIstZombie);
+                                    // TODO: 02.05.2020 schlumpf in zombieliste hinzufügen oder removen
+                                    zugBeenden();
+                                    return true;
+                                }
 
+                                //gucken ob letztes feld flussfeld ist
                                 if (i == augenzahl && (schlumpf.getAktuellesFeld() == 16 || schlumpf.getAktuellesFeld() == 17
                                         || schlumpf.getAktuellesFeld() == 25 || schlumpf.getAktuellesFeld() == 26
-                                        || schlumpf.getAktuellesFeld() == 27)){
+                                        || schlumpf.getAktuellesFeld() == 27)) {
                                     System.out.println("Der Schlumpf kann nicht auf einem Flussfeld stehen bleiben.");
                                     schlumpf.setAktuellesFeld(ursprungsFeld);
                                     schlumpf.setIstZombie(ursprungsObIstZombie);
                                     // TODO: 02.05.2020 schlumpf in zombieliste hinzufügen oder removen
+                                    zugBeenden();
+                                    return true;
                                 }
 
                                 //pro feld statusveränderungen anpassen:
@@ -335,18 +347,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1); //zieht feld für feld
             }
 
-                // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
-                if (schlumpfine.getAktuellesFeld() != 24) { //auf PilzFeld hat Schlumpfine keine Wirkung
-                    for (Spieler spieler : spielerListe) {
-                        for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                            if (schlumpfine.getAktuellesFeld() == schlumpf.getAktuellesFeld() && schlumpf.isIstZombie()) {
-                                schlumpf.setIstZombie(false);
-                                zombieSchluempfe.remove(schlumpf);
-                                System.out.println("Die Schlumpfine heilt Schlumpf " + schlumpf.getName() + ". Er ist nun kein Zombie mehr.");
-                            }
+            // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
+            if (schlumpfine.getAktuellesFeld() != 24) { //auf PilzFeld hat Schlumpfine keine Wirkung
+                for (Spieler spieler : spielerListe) {
+                    for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                        if (schlumpfine.getAktuellesFeld() == schlumpf.getAktuellesFeld() && schlumpf.isIstZombie()) {
+                            schlumpf.setIstZombie(false);
+                            zombieSchluempfe.remove(schlumpf);
+                            System.out.println("Die Schlumpfine heilt Schlumpf " + schlumpf.getName() + ". Er ist nun kein Zombie mehr.");
                         }
                     }
                 }
+            }
             System.out.println("Schlumpfine ist nun auf Feld " + schlumpfine.getAktuellesFeld() + ".");
         }
     }
