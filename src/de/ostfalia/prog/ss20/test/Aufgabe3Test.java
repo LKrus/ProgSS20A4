@@ -7,9 +7,6 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 
-import de.ostfalia.prog.ss20.exceptions.FalscheSpielerzahlException;
-import de.ostfalia.prog.ss20.exceptions.UngueltigePositionException;
-import de.ostfalia.prog.ss20.exceptions.WiederholteFarbenException;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -36,6 +33,9 @@ import de.ostfalia.junit.runner.TopologicalSortRunner;
 import de.ostfalia.prog.ss20.ZombieSchluempfe;
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.enums.Richtung;
+import de.ostfalia.prog.ss20.exceptions.FalscheSpielerzahlException;
+import de.ostfalia.prog.ss20.exceptions.UngueltigePositionException;
+import de.ostfalia.prog.ss20.exceptions.WiederholteFarbenException;
 import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
 
 /**
