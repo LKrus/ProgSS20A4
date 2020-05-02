@@ -240,6 +240,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                     schlumpf.setAktuellesFeld(ursprungsFeld);
                                     schlumpf.setIstZombie(ursprungsObIstZombie);
                                     // TODO: 02.05.2020 schlumpf in zombieliste hinzufügen oder removen
+                                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
                                     zugBeenden();
                                     return true;
                                 }
@@ -252,6 +253,17 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                     schlumpf.setAktuellesFeld(ursprungsFeld);
                                     schlumpf.setIstZombie(ursprungsObIstZombie);
                                     // TODO: 02.05.2020 schlumpf in zombieliste hinzufügen oder removen
+                                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
+                                    zugBeenden();
+                                    return true;
+                                }
+                                //wenn letztes feld pilzfeld ist
+                                if (i==augenzahl&&schlumpf.getAktuellesFeld()==24&&schlumpf.isIstZombie()){
+                                    System.out.println("Schlumpf "+figurName+" wird vom Pilzfeld geheilt. Er ist nun kein Zombie mehr.");
+                                    schlumpf.setIstZombie(false);
+                                    zombieSchluempfe.remove(schlumpf);
+                                    schlumpf.setAktuellesFeld(1);
+                                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
                                     zugBeenden();
                                     return true;
                                 }
