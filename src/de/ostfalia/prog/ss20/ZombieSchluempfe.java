@@ -113,9 +113,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         //je nachdem wie viele Farben, so viele Spieler
         try {
             spielerHinzufügen(farben);
-        } catch(WiederholteFarbenException w){
+        } catch (WiederholteFarbenException w) {
             System.err.println(w.toString());
-        } catch(FalscheSpielerzahlException f){
+        } catch (FalscheSpielerzahlException f) {
             System.err.println(f.toString());
         }
 
@@ -161,9 +161,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     public ZombieSchluempfe(String conf, Farbe... farben) {
         try {
             spielerHinzufügen(farben);
-        } catch(WiederholteFarbenException w){
+        } catch (WiederholteFarbenException w) {
             System.err.println(w.toString());
-        } catch(FalscheSpielerzahlException f){
+        } catch (FalscheSpielerzahlException f) {
             System.err.println(f.toString());
         }
 
@@ -304,12 +304,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                     zombieSchluempfe.remove(schlumpf);
                                     System.out.println("Doc heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
                                 }
-                                if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie()) {
+                                if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() != 24) {
                                     schlumpf.setIstZombie(true);
                                     zombieSchluempfe.add(schlumpf);
                                     System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
                                 }
-                                if (schlumpf.getAktuellesFeld() == schlumpfine.getAktuellesFeld() && schlumpf.isIstZombie()) {
+                                if (schlumpf.getAktuellesFeld() == schlumpfine.getAktuellesFeld() && schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() != 24) {
                                     schlumpf.setIstZombie(false);
                                     zombieSchluempfe.remove(schlumpf);
                                     System.out.println("Die Schlumpfine heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
@@ -332,7 +332,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     public void fliegeBewegung(int augenzahl, Richtung richtung) {
-        int ursprungsfeld=fliege.getAktuellesFeld();
+        int ursprungsfeld = fliege.getAktuellesFeld();
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
@@ -351,10 +351,10 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
 
-        if (fliege.getAktuellesFeld()==doc.getAktuellesFeld()){
+        if (fliege.getAktuellesFeld() == doc.getAktuellesFeld()) {
             System.out.println("Bzz bleibt nicht auf Docs Labor.");
             fliege.setAktuellesFeld(ursprungsfeld);
-        }else {
+        } else {
 
             // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
             if (fliege.getAktuellesFeld() != 24) { //auf pilzfeld hat fliege keine wirkung
@@ -377,12 +377,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
-            if (schlumpfine.getAktuellesFeld() == 3 || schlumpfine.getAktuellesFeld()==31) {
+            if (schlumpfine.getAktuellesFeld() == 3 || schlumpfine.getAktuellesFeld() == 31) {
                 if (richtung == Richtung.WEITER) {
                     schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1);
-                } else if(schlumpfine.getAktuellesFeld()==3){
+                } else if (schlumpfine.getAktuellesFeld() == 3) {
                     schlumpfine.setAktuellesFeld(8);
-                }else if (schlumpfine.getAktuellesFeld() == 31) {
+                } else if (schlumpfine.getAktuellesFeld() == 31) {
                     schlumpfine.setAktuellesFeld(36);
                 }
 
@@ -390,9 +390,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 schlumpfine.setAktuellesFeld(15);
             } else if (schlumpfine.getAktuellesFeld() == 35) {
                 schlumpfine.setAktuellesFeld(1);
-            }else if (schlumpfine.getAktuellesFeld()==36){
+            } else if (schlumpfine.getAktuellesFeld() == 36) {
                 schlumpfine.setAktuellesFeld(1);
-            }else {
+            } else {
                 schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1); //zieht feld für feld
             }
 
