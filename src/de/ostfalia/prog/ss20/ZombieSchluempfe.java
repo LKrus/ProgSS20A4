@@ -308,12 +308,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                     zombieSchluempfe.remove(schlumpf);
                                     System.out.println("Doc heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
                                 }
-                                if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie()) {
+                                if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() != 24) {
                                     schlumpf.setIstZombie(true);
                                     zombieSchluempfe.add(schlumpf);
                                     System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
                                 }
-                                if (schlumpf.getAktuellesFeld() == schlumpfine.getAktuellesFeld() && schlumpf.isIstZombie()) {
+                                if (schlumpf.getAktuellesFeld() == schlumpfine.getAktuellesFeld() && schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() != 24) {
                                     schlumpf.setIstZombie(false);
                                     zombieSchluempfe.remove(schlumpf);
                                     System.out.println("Die Schlumpfine heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
@@ -336,15 +336,22 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     public void fliegeBewegung(int augenzahl, Richtung richtung) {
+        int ursprungsfeld = fliege.getAktuellesFeld();
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
-            if (fliege.getAktuellesFeld() == 3) {
+            if (fliege.getAktuellesFeld() == 3||fliege.getAktuellesFeld()==31) {
                 if (richtung == Richtung.WEITER) {
                     fliege.setAktuellesFeld(fliege.getAktuellesFeld() + 1);
-                } else {
+                } else if (fliege.getAktuellesFeld()==3){
                     fliege.setAktuellesFeld(8);
+                }else if (fliege.getAktuellesFeld()==31){
+                    System.out.println("Die Fliege darf nicht ins Dorf.");
+                    fliege.setAktuellesFeld(ursprungsfeld);
+                    System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
+                    zugBeenden();
                 }
+
             } else if (fliege.getAktuellesFeld() == 7) {
                 fliege.setAktuellesFeld(15);
             } else if (fliege.getAktuellesFeld() == 35) {
@@ -354,14 +361,23 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
 
-        // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
-        if (fliege.getAktuellesFeld() != 24) { //auf pilzfeld hat fliege keine wirkung
-            for (Spieler spieler : spielerListe) {
-                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                    if (fliege.getAktuellesFeld() == schlumpf.getAktuellesFeld() && !schlumpf.isIstZombie()) {
-                        schlumpf.setIstZombie(true);
-                        zombieSchluempfe.add(schlumpf);
-                        System.out.println("Die Fliege beißt Schlumpf " + schlumpf.getName() + ". Er ist nun ein Zombie.");
+        if (fliege.getAktuellesFeld() == doc.getAktuellesFeld()) {
+            System.out.println("Bzz bleibt nicht auf Docs Labor.");
+            fliege.setAktuellesFeld(ursprungsfeld);
+        }else if(fliege.getAktuellesFeld()==11){
+            System.out.println("Fliege bleibt nicht auf Blütenstaubfeld.");
+            fliege.setAktuellesFeld(ursprungsfeld);
+        } else {
+
+            // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
+            if (fliege.getAktuellesFeld() != 24) { //auf pilzfeld hat fliege keine wirkung
+                for (Spieler spieler : spielerListe) {
+                    for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                        if (fliege.getAktuellesFeld() == schlumpf.getAktuellesFeld() && !schlumpf.isIstZombie()) {
+                            schlumpf.setIstZombie(true);
+                            zombieSchluempfe.add(schlumpf);
+                            System.out.println("Die Fliege beißt Schlumpf " + schlumpf.getName() + ". Er ist nun ein Zombie.");
+                        }
                     }
                 }
             }
@@ -374,12 +390,12 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
-            if (schlumpfine.getAktuellesFeld() == 3 || schlumpfine.getAktuellesFeld()==31) {
+            if (schlumpfine.getAktuellesFeld() == 3 || schlumpfine.getAktuellesFeld() == 31) {
                 if (richtung == Richtung.WEITER) {
                     schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1);
-                } else if(schlumpfine.getAktuellesFeld()==3){
+                } else if (schlumpfine.getAktuellesFeld() == 3) {
                     schlumpfine.setAktuellesFeld(8);
-                }else if (schlumpfine.getAktuellesFeld() == 31) {
+                } else if (schlumpfine.getAktuellesFeld() == 31) {
                     schlumpfine.setAktuellesFeld(36);
                 }
 
@@ -387,9 +403,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 schlumpfine.setAktuellesFeld(15);
             } else if (schlumpfine.getAktuellesFeld() == 35) {
                 schlumpfine.setAktuellesFeld(1);
-            }else if (schlumpfine.getAktuellesFeld()==36){
+            } else if (schlumpfine.getAktuellesFeld() == 36) {
                 schlumpfine.setAktuellesFeld(1);
-            }else {
+            } else {
                 schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1); //zieht feld für feld
             }
 
