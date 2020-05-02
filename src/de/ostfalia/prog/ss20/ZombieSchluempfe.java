@@ -293,7 +293,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                                     System.out.println("Schlumpf " + figurName + " wird vom Pilzfeld geheilt. Er ist nun kein Zombie mehr.");
                                     schlumpf.setIstZombie(false);
                                     zombieSchluempfe.remove(schlumpf);
-                                    schlumpf.setAktuellesFeld(1);
+                                    schlumpf.setAktuellesFeld(0);
                                     System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
                                     zugBeenden();
                                     return true;
@@ -369,7 +369,10 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }else if(fliege.getAktuellesFeld()==11){
             System.out.println("Fliege bleibt nicht auf Blütenstaubfeld.");
             fliege.setAktuellesFeld(ursprungsfeld);
-        } else {
+        }else if (fliege.getAktuellesFeld()==schlumpfine.getAktuellesFeld()){
+            System.out.println("Fliege bleibt nicht auf Feld der Schlumpfine.");
+            fliege.setAktuellesFeld(ursprungsfeld);
+        }else {
 
             // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
             if (fliege.getAktuellesFeld() != 24) { //auf pilzfeld hat fliege keine wirkung
