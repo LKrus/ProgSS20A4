@@ -123,7 +123,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     private void testeValidePositionierung() {
-        try {
             for (int n : flussFeldNummern) {
                 if (doc.getAktuellesFeld() == n || fliege.getAktuellesFeld() == n) {
                     throw new UngueltigePositionException("Fliege oder Oberschlumpf stehen auf einem für sie nicht vorgesehenen Feld.");
@@ -138,9 +137,24 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             if (fliege.getAktuellesFeld() == 0 || fliege.getAktuellesFeld() == 36) {
                 throw new UngueltigePositionException("Fliege kann weder auf dem Start- noch auf dem Zielfeld des Spiels starten.");
             }
-        } catch (UngueltigePositionException u) {
-            System.err.println(u.getMessage());
-        }
+            if(fliege.getAktuellesFeld() < 0 || fliege.getAktuellesFeld() > 36){
+                throw new UngueltigePositionException("Fliege nicht auf Spielbrett.");
+            }
+            if(doc.getAktuellesFeld() < 0 || doc.getAktuellesFeld() > 36){
+                throw new UngueltigePositionException("Oberschlumpf nicht auf Spielbrett.");
+            }
+            for(Spieler spieler : spielerListe) {
+                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                    for (int n : flussFeldNummern) {
+                        if (schlumpf.getAktuellesFeld() == n) {
+                            throw new UngueltigePositionException("Schlumpf auf Flussfeld.");
+                        }
+                    }
+                    if (schlumpf.getAktuellesFeld() < 0 || schlumpf.getAktuellesFeld() > 36) {
+                        throw new UngueltigePositionException("Schlumpf nicht auf Spielbrett.");
+                    }
+                }
+            }
     }
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
@@ -181,6 +195,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 doc.setAktuellesFeld(feld);
             }
         }
+
+        testeValidePositionierung();
+
         initialisieren();
     }
 
