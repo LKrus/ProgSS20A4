@@ -123,24 +123,38 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     private void testeValidePositionierung() {
-        try {
             for (int n : flussFeldNummern) {
                 if (doc.getAktuellesFeld() == n || fliege.getAktuellesFeld() == n) {
-                    throw new UngueltigePositionException("Fliege oder Oberschlumpf stehen auf einem für sie nicht vorgesehenen Feld.");
+                    throw new UngueltigePositionException();
                 }
             }
             if (doc.getAktuellesFeld() == fliege.getAktuellesFeld()){
-                throw new UngueltigePositionException("Fliege und Doc können nicht auf dem selben Feld beginnen.");
+                throw new UngueltigePositionException();
             }
             if(fliege.getAktuellesFeld() == 11){
-                throw new UngueltigePositionException("Fliege kann nicht auf der Tuberose(Feld 11) landen.");
+                throw new UngueltigePositionException();
             }
             if(fliege.getAktuellesFeld() == 0 || fliege.getAktuellesFeld() == 36){
-                throw new UngueltigePositionException("Fliege kann weder auf dem Start- noch auf dem Zielfeld des Spiels starten.");
+                throw new UngueltigePositionException();
             }
-        } catch(UngueltigePositionException u){
-            System.err.println(u.getMessage());
-        }
+            if(fliege.getAktuellesFeld() < 0 || fliege.getAktuellesFeld() > 36){
+                throw new UngueltigePositionException();
+            }
+            if(doc.getAktuellesFeld() < 0 || doc.getAktuellesFeld() > 36){
+                throw new UngueltigePositionException();
+            }
+            for(Spieler spieler : spielerListe) {
+                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                    for (int n : flussFeldNummern) {
+                        if (schlumpf.getAktuellesFeld() == n) {
+                            throw new UngueltigePositionException();
+                        }
+                    }
+                    if (schlumpf.getAktuellesFeld() < 0 || schlumpf.getAktuellesFeld() > 36) {
+                        throw new UngueltigePositionException();
+                    }
+                }
+            }
     }
 
     public ZombieSchluempfe(String conf, Farbe... farben) {
@@ -181,6 +195,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 doc.setAktuellesFeld(feld);
             }
         }
+
+        testeValidePositionierung();
+
         initialisieren();
     }
 
@@ -437,25 +454,25 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 switch (farbe) {
                     case GRUEN:
                         if (istGruenImSpiel) {
-                            throw new WiederholteFarbenException("Grün wurde zweimal hinzugefügt.");
+                            throw new WiederholteFarbenException();
                         }
                         istGruenImSpiel = true;
                         break;
                     case ROT:
                         if (istRotImSpiel) {
-                            throw new WiederholteFarbenException("Rot wurde zweimal hinzugefügt.");
+                            throw new WiederholteFarbenException();
                         }
                         istRotImSpiel = true;
                         break;
                     case BLAU:
                         if (istBlauImSpiel) {
-                            throw new WiederholteFarbenException("Blau wurde zweimal hinzugefügt.");
+                            throw new WiederholteFarbenException();
                         }
                         istBlauImSpiel = true;
                         break;
                     case GELB:
                         if (istGelbImSpiel) {
-                            throw new WiederholteFarbenException("Gelb wurde zweimal hinzugefügt.");
+                            throw new WiederholteFarbenException();
                         }
                         istGelbImSpiel = true;
                         break;
@@ -466,9 +483,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 playerCounter++;
             }
             if (playerCounter == 0) {
-                throw new FalscheSpielerzahlException("Not enough players. Minimum is 1.");
+                throw new FalscheSpielerzahlException();
             } else if (playerCounter > 4) {
-                throw new FalscheSpielerzahlException("Too many players. Maximum is 4.");
+                throw new FalscheSpielerzahlException();
             }
         } catch (FalscheSpielerzahlException f){
             System.err.println(f.getMessage());

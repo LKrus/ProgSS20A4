@@ -21,7 +21,9 @@ public class Spiel {
 
     public static void main(String[] args) {
         ingame(setupGame());
+        //ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe("GELB-A:90, GELB-B:0, GELB-C:0, GELB-D:0, Bzz:20, Doc:29", GELB);
     }
+
 
     public static ZombieSchluempfe setupGame(){
         ZombieSchluempfe zombieSchluempfe = new ZombieSchluempfe(GELB);
@@ -220,4 +222,5 @@ public class Spiel {
             zombieSchluempfe.bewegeFigur("Schlumpfine", augenzahl);
         }
     }
+
 }
