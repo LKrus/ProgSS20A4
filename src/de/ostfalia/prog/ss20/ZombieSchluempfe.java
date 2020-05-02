@@ -332,6 +332,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     public void fliegeBewegung(int augenzahl, Richtung richtung) {
+        int ursprungsfeld=fliege.getAktuellesFeld();
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
@@ -350,14 +351,20 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
 
-        // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
-        if (fliege.getAktuellesFeld() != 24) { //auf pilzfeld hat fliege keine wirkung
-            for (Spieler spieler : spielerListe) {
-                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                    if (fliege.getAktuellesFeld() == schlumpf.getAktuellesFeld() && !schlumpf.isIstZombie()) {
-                        schlumpf.setIstZombie(true);
-                        zombieSchluempfe.add(schlumpf);
-                        System.out.println("Die Fliege beißt Schlumpf " + schlumpf.getName() + ". Er ist nun ein Zombie.");
+        if (fliege.getAktuellesFeld()==29){
+            System.out.println("Bzz bleibt nicht auf Docs Labor.");
+            fliege.setAktuellesFeld(ursprungsfeld);
+        }else {
+
+            // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
+            if (fliege.getAktuellesFeld() != 24) { //auf pilzfeld hat fliege keine wirkung
+                for (Spieler spieler : spielerListe) {
+                    for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                        if (fliege.getAktuellesFeld() == schlumpf.getAktuellesFeld() && !schlumpf.isIstZombie()) {
+                            schlumpf.setIstZombie(true);
+                            zombieSchluempfe.add(schlumpf);
+                            System.out.println("Die Fliege beißt Schlumpf " + schlumpf.getName() + ". Er ist nun ein Zombie.");
+                        }
                     }
                 }
             }
