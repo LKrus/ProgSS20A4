@@ -532,6 +532,10 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         if (doc.getIstZombie()) {
             spielStatus = spielStatus.concat(":Z");
         }
+        spielStatus = spielStatus.concat("Schlumpfine:" + schlumpfine.getAktuellesFeld());
+        if(schlumpfine.getIstZombie()){
+            spielStatus = spielStatus.concat(":Z");
+        }
         return spielStatus;
     }
 
