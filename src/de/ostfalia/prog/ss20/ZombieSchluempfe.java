@@ -193,6 +193,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 fliege.setAktuellesFeld(feld);
             } else if (configName.contentEquals("Doc")) {
                 doc.setAktuellesFeld(feld);
+            } else if (configName.contentEquals("Schlumpfine")){
+                schlumpfine.setAktuellesFeld(feld);
             }
             if(configName.contains("GELB")){
                 gelbFiguren++;
