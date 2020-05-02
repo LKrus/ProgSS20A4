@@ -107,7 +107,7 @@ public class Spiel {
         while (farbeGewonnen == null) {
             System.out.println("\nEs ist Spieler " + zombieSchluempfe.getFarbeAmZug() + " dran.");
 
-            System.out.println(zombieSchluempfe.toString());
+            System.out.println(zombieSchluempfe.toString()); // TODO: 02.05.2020 Schlumpfine auch mit nennen
 
             int augenzahl = zombieSchluempfe.wuerfeln(); //6 = fliege
             if (augenzahl == 6) {

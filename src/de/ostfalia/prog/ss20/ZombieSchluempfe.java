@@ -351,7 +351,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
 
-        if (fliege.getAktuellesFeld()==29){
+        if (fliege.getAktuellesFeld()==doc.getAktuellesFeld()){
             System.out.println("Bzz bleibt nicht auf Docs Labor.");
             fliege.setAktuellesFeld(ursprungsfeld);
         }else {
