@@ -386,7 +386,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
 
-    public void schlumpfineBewegung(int augenzahl, Richtung richtung) { //bewegt sich feld für feld und heilt ggf
+    public void schlumpfineBewegung(int augenzahl, Richtung richtung) {
+        //bewegt sich feld für feld und heilt ggf
         //überprüfen ob Abzweigung
         for (int i = 1; i <= augenzahl; i++) {
             //überprüfen ob abzweigung
@@ -446,6 +447,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             return fliege.getAktuellesFeld();
         } else if (figurName.contentEquals("Doc")) {
             return doc.getAktuellesFeld();
+        } else if (figurName.contentEquals("Schlumpfine")){
+            return schlumpfine.getAktuellesFeld();
         }
         return -1;
     }
