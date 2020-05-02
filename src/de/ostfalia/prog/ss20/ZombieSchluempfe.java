@@ -165,7 +165,9 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 fliegeBewegung(augenzahl, richtung);
                 zugBeenden();
                 return true;
-            } else {
+            } else if (figurName.equals(schlumpfine.getName())){
+
+            }else {
                 for (Spieler spieler : spielerListe) {
                     for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                         if (schlumpf.getName().equals(figurName)) {
@@ -263,6 +265,39 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
         System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
+    }
+
+
+    public void schlumpfineBewegung(int augenzahl, Richtung richtung){ //bewegt sich feld für feld und heilt ggf
+        //überprüfen ob Abzweigung
+        for (int i = 1; i <= augenzahl; i++) {
+            //überprüfen ob abzweigung
+            if (schlumpfine.getAktuellesFeld() == 3) {
+                if (richtung == Richtung.WEITER) {
+                    schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1);
+                } else {
+                    schlumpfine.setAktuellesFeld(8);
+                }
+            } else if (schlumpfine.getAktuellesFeld() == 7) {
+                schlumpfine.setAktuellesFeld(15);
+            } else if (schlumpfine.getAktuellesFeld() == 35) {
+                schlumpfine.setAktuellesFeld(1);
+            } else {
+                schlumpfine.setAktuellesFeld(schlumpfine.getAktuellesFeld() + 1); //zieht feld für feld
+            }
+
+            // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
+            for (Spieler spieler : spielerListe) {
+                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                    if (schlumpfine.getAktuellesFeld() == schlumpf.getAktuellesFeld() && schlumpf.isIstZombie()) {
+                        schlumpf.setIstZombie(false);
+                        zombieSchluempfe.remove(schlumpf);
+                        System.out.println("Die Schlumpfine heilt Schlumpf " + schlumpf.getName() + ". Er ist nun kein Zombie.");
+                    }
+                }
+            }
+            System.out.println("Schlumpfine ist nun auf Feld " + schlumpfine.getAktuellesFeld() + ".");
+        }
     }
 
 
