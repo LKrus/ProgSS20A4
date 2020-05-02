@@ -110,6 +110,8 @@ public class Spiel {
             int augenzahl = zombieSchluempfe.wuerfeln(); //6 = fliege
             if (augenzahl == 6) {
                 fliegeAmZug(zombieSchluempfe);
+            } else if(augenzahl == 7){
+                schlumpfineAmZug(zombieSchluempfe);
             } else {
                 System.out.println("Augenzahl: " + augenzahl);
 
@@ -186,6 +188,36 @@ public class Spiel {
             }
         } else {
             zombieSchluempfe.bewegeFigur("Bzz", augenzahl);
+        }
+    }
+
+    public static void schlumpfineAmZug(ZombieSchluempfe zombieSchluempfe){
+        System.out.println("Die Schlumpfine wurde gewürfelt!");
+        int augenzahl = 7;
+        while (augenzahl == 7) {
+            augenzahl = zombieSchluempfe.wuerfeln();
+        }
+        System.out.println("Augenzahl der Schlumpfine: " + augenzahl);
+
+        //nachrechnen ob abbiegung zwischen figur und figur+augenzahl da ist
+        if (zombieSchluempfe.schlumpfine.getAktuellesFeld() <= 3 && zombieSchluempfe.schlumpfine.getAktuellesFeld() + augenzahl > 3) {
+
+            System.out.println("In welche Richtung soll gezogen werden? WEITER oder ABZWEIGEN?");
+
+            String richtungString = scanner.next();
+            while(!richtungString.toLowerCase().contentEquals("weiter") &&
+                    !richtungString.toLowerCase().contentEquals("abzweigen")){
+                System.err.println("FEHLERHAFTE EINGABE. ERNEUT EINGEBEN.");
+                richtungString = scanner.next();
+            }
+
+            if (richtungString.toLowerCase().equals("weiter")) {
+                zombieSchluempfe.bewegeFigur("Schlumpfine", augenzahl, Richtung.WEITER);
+            } else if (richtungString.toLowerCase().equals("abzweigen")) {
+                zombieSchluempfe.bewegeFigur("Schlumpfine", augenzahl, Richtung.ABZWEIGEN);
+            }
+        } else {
+            zombieSchluempfe.bewegeFigur("Schlumpfine", augenzahl);
         }
     }
 }

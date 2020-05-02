@@ -10,6 +10,7 @@ import de.ostfalia.prog.ss20.felder.Zielfeld;
 import de.ostfalia.prog.ss20.figuren.Doc;
 import de.ostfalia.prog.ss20.figuren.Fliege;
 import de.ostfalia.prog.ss20.figuren.Schlumpf;
+import de.ostfalia.prog.ss20.figuren.Schlumpfine;
 import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     Fliege fliege;
     Doc doc;
     Zielfeld zielfeld;
+    Schlumpfine schlumpfine;
+
 
     public void initialisieren() {
         zielfeld = new Zielfeld(36);
@@ -98,7 +101,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     public static int wuerfeln() {
-        return (int) (Math.random() * 6) + 1;
+        return (int) (Math.random() * 7) + 1;
     }
 
     public ZombieSchluempfe(Farbe... farben) {
@@ -109,6 +112,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
+        schlumpfine = new Schlumpfine("Schlumpfine",1);
 
         initialisieren();
     }
@@ -120,6 +124,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
+        schlumpfine = new Schlumpfine("Schlumpfine",1);
 
         //conf aufspalten:
         String[] confs = conf.split(", ");
