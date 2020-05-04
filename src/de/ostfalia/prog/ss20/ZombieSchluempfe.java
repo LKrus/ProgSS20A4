@@ -21,10 +21,6 @@ import java.util.List;
 
 public class ZombieSchluempfe implements IZombieSchluempfe {
 
-    /*
-    debugging/cheatbefehle, um bestimmte spielsituationen herstellen zu können
-     */
-
     private List<Feld> feldListe = new ArrayList<>();
     private List<Spieler> spielerListe = new ArrayList<>();
     private List<Schlumpf> zombieSchluempfe = new ArrayList<>();
@@ -35,6 +31,10 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     Zielfeld zielfeld;
     boolean istBlauImSpiel = false, istRotImSpiel = false, istGelbImSpiel = false, istGruenImSpiel = false;
     Schlumpfine schlumpfine;
+    int gelbFiguren = 0;
+    int rotFiguren = 0;
+    int blauFiguren = 0;
+    int gruenFiguren = 0;
 
 
     public void initialisieren() {
@@ -111,7 +111,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     public ZombieSchluempfe(Farbe... farben) throws FalscheSpielerzahlException, WiederholteFarbenException{
         //je nachdem wie viele Farben, so viele Spieler
-        spielerHinzufügen(farben);
+        spielerHinzufuegen(farben);
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
@@ -125,19 +125,20 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     private void testeValidePositionierung() {
         if (doc.getAktuellesFeld() == fliege.getAktuellesFeld()) {
             throw new UngueltigePositionException("Fliege und Doc können nicht auf dem selben Feld beginnen.");
-        }
-        if (fliege.getAktuellesFeld() == 11) {
+        }else if (fliege.getAktuellesFeld() == 11) {
             throw new UngueltigePositionException("Fliege kann nicht auf der Tuberose(Feld 11) landen.");
-        }
-        if (fliege.getAktuellesFeld() == 0 || fliege.getAktuellesFeld() == 36) {
+        }else if (fliege.getAktuellesFeld() == 0 || fliege.getAktuellesFeld() == 36) {
             throw new UngueltigePositionException("Fliege kann weder auf dem Start- noch auf dem Zielfeld des Spiels starten.");
-        }
-        if (fliege.getAktuellesFeld() < 0 || fliege.getAktuellesFeld() > 36) {
+        }else if (fliege.getAktuellesFeld() < 0 || fliege.getAktuellesFeld() > 36) {
             throw new UngueltigePositionException("Fliege nicht auf Spielbrett.");
-        }
-        if (doc.getAktuellesFeld() < 0 || doc.getAktuellesFeld() > 36) {
+        }else if (doc.getAktuellesFeld() < 0 || doc.getAktuellesFeld() > 36) {
             throw new UngueltigePositionException("Oberschlumpf nicht auf Spielbrett.");
         }
+
+        testeValidePositionSchluempfe();
+    }
+
+    private void testeValidePositionSchluempfe(){
         for (Spieler spieler : spielerListe) {
             for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                 for (int n : flussFeldNummern) {
@@ -153,19 +154,26 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
     }
 
     public ZombieSchluempfe(String conf, Farbe... farben) throws WiederholteFarbenException, FalscheSpielerzahlException{
-        spielerHinzufügen(farben);
+        spielerHinzufuegen(farben);
 
 
         doc = new Doc("Doc", 29);
         fliege = new Fliege("Bzz", 20);
         schlumpfine = new Schlumpfine("Schlumpfine", 1);
 
-        int gelbFiguren = 0;
-        int rotFiguren = 0;
-        int blauFiguren = 0;
-        int gruenFiguren = 0;
         //conf aufspalten:
-        String[] confs = conf.split(", ");
+        configHandling(conf.split(", "));
+
+        testeValidePositionierung();
+
+        initialisieren();
+    }
+
+    private void configHandling(String[] confs) throws WiederholteFarbenException{
+        blauFiguren = 0;
+        rotFiguren = 0;
+        gelbFiguren = 0;
+        gruenFiguren = 0;
         for (String config : confs) {
             String configName = config.substring(0, config.indexOf(":"));
             int feld;
@@ -177,42 +185,50 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 feld = Integer.parseInt(config.substring(config.indexOf(":") + 1));
                 istZombie = false;
             }
-
-            for (Spieler spieler : spielerListe) {
-                for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                    if (schlumpf.getName().contentEquals(configName)) {
-                        schlumpf.setAktuellesFeld(feld);
-                        schlumpf.setIstZombie(istZombie);
-                        if (istZombie) {
-                            zombieSchluempfe.add(schlumpf);
-                        }
-                    }
-                }
+            if(configName.contains("GELB") ||
+                    configName.contains("ROT") ||
+                    configName.contains("GRUEN") ||
+                    configName.contains("BLAU")) {
+                schlumpfConfigHandling(configName, feld, istZombie);
             }
-            if (configName.contentEquals("Bzz")) {
+            else if (configName.contentEquals("Bzz")) {
                 fliege.setAktuellesFeld(feld);
             } else if (configName.contentEquals("Doc")) {
                 doc.setAktuellesFeld(feld);
             } else if (configName.contentEquals("Schlumpfine")){
                 schlumpfine.setAktuellesFeld(feld);
             }
-            if(configName.contains("GELB")){
-                gelbFiguren++;
-            } else if(configName.contains("ROT")){
-                rotFiguren++;
-            } else if(configName.contains("BLAU")){
-                blauFiguren++;
-            } else if(configName.contains("GRUEN")){
-                gruenFiguren++;
-            }
-            if(gelbFiguren > 4 || rotFiguren > 4 || blauFiguren > 4 || gruenFiguren > 4){
-                throw new WiederholteFarbenException("Mehr als 4 FIguren einer Farbe.");
+            checkWiederholteFarben(configName);
+        }
+    }
+
+    private void checkWiederholteFarben(String configName) throws WiederholteFarbenException{
+        if(configName.contains("GELB")){
+            gelbFiguren++;
+        } else if(configName.contains("ROT")){
+            rotFiguren++;
+        } else if(configName.contains("BLAU")){
+            blauFiguren++;
+        } else if(configName.contains("GRUEN")){
+            gruenFiguren++;
+        }
+        if(gelbFiguren > 4 || rotFiguren > 4 || blauFiguren > 4 || gruenFiguren > 4){
+            throw new WiederholteFarbenException("Mehr als 4 FIguren einer Farbe.");
+        }
+    }
+
+    private void schlumpfConfigHandling(String configName, int feld, boolean istZombie) {
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                if (schlumpf.getName().contentEquals(configName)) {
+                    schlumpf.setAktuellesFeld(feld);
+                    schlumpf.setIstZombie(istZombie);
+                    if (istZombie) {
+                        zombieSchluempfe.add(schlumpf);
+                    }
+                }
             }
         }
-
-        testeValidePositionierung();
-
-        initialisieren();
     }
 
     @Override
@@ -228,113 +244,128 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 zugBeenden();
                 return true;
             } else {
-                for (Spieler spieler : spielerListe) {
-                    for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
-                        if (schlumpf.getName().equals(figurName)) {
-                            int ursprungsFeld = schlumpf.getAktuellesFeld();
-                            boolean ursprungsObIstZombie = schlumpf.isIstZombie();
+                return bewegeFigurSchlumpf(figurName, augenzahl, richtung);
+            }
+        }
+        return false;
+    }
 
-                            if (schlumpf.getAktuellesFeld() == 36) {
-                                System.out.println("Schlumpf " + figurName + " ist bereits im Dorf und kann nicht mehr bewegt werden.");
-                                zugBeenden();
-                                return true;
-                            }
-                            for (int i = 1; i <= augenzahl; i++) {
-                                //überprüfen ob abzweigung
-                                if (schlumpf.getAktuellesFeld() == 3 || schlumpf.getAktuellesFeld() == 31) {
-                                    if (richtung == Richtung.WEITER) {
-                                        schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1);
-                                    } else if (schlumpf.getAktuellesFeld() == 3) {
-                                        schlumpf.setAktuellesFeld(8);
-                                    } else if (schlumpf.getAktuellesFeld() == 31) {
-                                        schlumpf.setAktuellesFeld(36);
-                                    }
+    private boolean bewegeFigurSchlumpf(String figurName, int augenzahl, Richtung richtung){
+        for (Spieler spieler : spielerListe) {
+            for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
+                if (schlumpf.getName().equals(figurName)) {
+                    int ursprungsFeld = schlumpf.getAktuellesFeld();
+                    boolean ursprungsObIstZombie = schlumpf.isIstZombie();
 
-                                } else if (schlumpf.getAktuellesFeld() == 7) {
-                                    schlumpf.setAktuellesFeld(15);
-                                } else if (schlumpf.getAktuellesFeld() == 35) {
-                                    schlumpf.setAktuellesFeld(1);
-                                } else {
-                                    schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
-                                }
+                    if (schlumpf.getAktuellesFeld() == 36) {
+                        System.out.println("Schlumpf " + figurName + " ist bereits im Dorf und kann nicht mehr bewegt werden.");
+                        zugBeenden();
+                        return true;
+                    }
+                    for (int i = 1; i <= augenzahl; i++) {
+                        //überprüfen ob abzweigung
+                        schlumpfZiehtFeld(schlumpf, richtung);
 
-                                //wenn schlumpf im ziel ist, ist zug beendet:
-                                if (!schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() == 36) {
-                                    zielfeld.addToZielListe(schlumpf);
-                                    System.out.println(figurName + " ist nun im Ziel.");
-                                    zugBeenden();
-                                    return true;
-                                }
-                                //zombieschlumpf darf nicht ins ziel
-                                else if (schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() == 36) {
-                                    System.out.println("Ein Zombieschlumpf darf nicht ins Dorf.");
-                                    schlumpf.setAktuellesFeld(ursprungsFeld);
-                                    schlumpf.setIstZombie(ursprungsObIstZombie);
-                                    // TODO: 02.05.2020 schlumpf in zombieliste hinzufügen oder removen
-                                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
-                                    zugBeenden();
-                                    return true;
-                                }
-
-                                //gucken ob letztes feld flussfeld ist
-                                if (i == augenzahl && (schlumpf.getAktuellesFeld() == 16 || schlumpf.getAktuellesFeld() == 17
-                                        || schlumpf.getAktuellesFeld() == 25 || schlumpf.getAktuellesFeld() == 26
-                                        || schlumpf.getAktuellesFeld() == 27)) {
-                                    System.out.println("Der Schlumpf kann nicht auf einem Flussfeld stehen bleiben.");
-                                    schlumpf.setAktuellesFeld(ursprungsFeld);
-                                    schlumpf.setIstZombie(ursprungsObIstZombie);
-                                    // TODO: 02.05.2020 schlumpf in zombieliste hinzufügen oder removen
-                                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
-                                    zugBeenden();
-                                    return true;
-                                }
-                                //wenn letztes feld pilzfeld ist
-                                if (i == augenzahl && schlumpf.getAktuellesFeld() == 24 && schlumpf.isIstZombie()) {
-                                    System.out.println("Schlumpf " + figurName + " wird vom Pilzfeld geheilt. Er ist nun kein Zombie mehr.");
-                                    schlumpf.setIstZombie(false);
-                                    zombieSchluempfe.remove(schlumpf);
-                                    schlumpf.setAktuellesFeld(0);
-                                    System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
-                                    zugBeenden();
-                                    return true;
-                                }
-
-                                //pro feld statusveränderungen anpassen:
-                                if (schlumpf.getAktuellesFeld() == 11 && schlumpf.isIstZombie()) {
-                                    schlumpf.setIstZombie(false);
-                                    zombieSchluempfe.remove(schlumpf);
-                                    System.out.println("Das Blütenstaubfeld heilt " + figurName + ". Er ist nun kein Zombie mehr.");
-                                }
-                                if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld() && schlumpf.isIstZombie()) {
-                                    schlumpf.setIstZombie(false);
-                                    zombieSchluempfe.remove(schlumpf);
-                                    System.out.println("Doc heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
-                                }
-                                if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld() && !schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() != 24) {
-                                    schlumpf.setIstZombie(true);
-                                    zombieSchluempfe.add(schlumpf);
-                                    System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
-                                }
-                                if (schlumpf.getAktuellesFeld() == schlumpfine.getAktuellesFeld() && schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() != 24) {
-                                    schlumpf.setIstZombie(false);
-                                    zombieSchluempfe.remove(schlumpf);
-                                    System.out.println("Die Schlumpfine heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
-                                }
-                                for (Schlumpf schlumpf2 : zombieSchluempfe) {
-                                    if (schlumpf.getAktuellesFeld() == schlumpf2.getAktuellesFeld()) {
-                                        schlumpf.setIstZombie(true);
-                                    }
-                                }
-                                System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
-                            }
+                        //wenn schlumpf im ziel ist, ist zug beendet:
+                        if (!schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() == 36) {
+                            zielfeld.addToZielListe(schlumpf);
+                            System.out.println(figurName + " ist nun im Ziel.");
                             zugBeenden();
                             return true;
                         }
+                        //zombieschlumpf darf nicht ins ziel
+                        else if (schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() == 36) {
+                            System.out.println("Ein Zombieschlumpf darf nicht ins Dorf.");
+                            schlumpf.setAktuellesFeld(ursprungsFeld);
+                            schlumpf.setIstZombie(ursprungsObIstZombie);
+                            System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
+                            zugBeenden();
+                            return true;
+                        }
+
+                        //gucken ob letztes feld flussfeld ist
+                        if (i == augenzahl && (schlumpf.getAktuellesFeld() == 16 || schlumpf.getAktuellesFeld() == 17
+                                || schlumpf.getAktuellesFeld() == 25 || schlumpf.getAktuellesFeld() == 26
+                                || schlumpf.getAktuellesFeld() == 27)) {
+                            System.out.println("Der Schlumpf kann nicht auf einem Flussfeld stehen bleiben.");
+                            schlumpf.setAktuellesFeld(ursprungsFeld);
+                            schlumpf.setIstZombie(ursprungsObIstZombie);
+                            System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
+                            zugBeenden();
+                            return true;
+                        }
+                        //wenn letztes feld pilzfeld ist
+                        if (i == augenzahl && schlumpf.getAktuellesFeld() == 24 && schlumpf.isIstZombie()) {
+                            System.out.println("Schlumpf " + figurName + " wird vom Pilzfeld geheilt. Er ist nun kein Zombie mehr.");
+                            schlumpf.setIstZombie(false);
+                            zombieSchluempfe.remove(schlumpf);
+                            schlumpf.setAktuellesFeld(0);
+                            System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
+                            zugBeenden();
+                            return true;
+                        }
+
+                        //pro feld statusveränderungen anpassen:
+                        statusVeraenderungen(schlumpf, figurName);
                     }
+                    zugBeenden();
+                    return true;
                 }
             }
         }
         return false;
+    }
+
+    private void schlumpfZiehtFeld(Schlumpf schlumpf, Richtung richtung) {
+        if (schlumpf.getAktuellesFeld() == 3 || schlumpf.getAktuellesFeld() == 31) {
+            if (richtung == Richtung.WEITER) {
+                schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1);
+            } else if (schlumpf.getAktuellesFeld() == 3) {
+                schlumpf.setAktuellesFeld(8);
+            } else if (schlumpf.getAktuellesFeld() == 31) {
+                schlumpf.setAktuellesFeld(36);
+            }
+
+        } else if (schlumpf.getAktuellesFeld() == 7) {
+            schlumpf.setAktuellesFeld(15);
+        } else if (schlumpf.getAktuellesFeld() == 35) {
+            schlumpf.setAktuellesFeld(1);
+        } else {
+            schlumpf.setAktuellesFeld(schlumpf.getAktuellesFeld() + 1); //zieht feld für feld
+        }
+    }
+
+    private void statusVeraenderungen(Schlumpf schlumpf, String figurName) {
+        if (schlumpf.getAktuellesFeld() == 11 && schlumpf.isIstZombie()) {
+            schlumpf.setIstZombie(false);
+            zombieSchluempfe.remove(schlumpf);
+            System.out.println("Das Blütenstaubfeld heilt " + figurName + ". Er ist nun kein Zombie mehr.");
+        }
+        if (schlumpf.getAktuellesFeld() == doc.getAktuellesFeld() && schlumpf.isIstZombie()) {
+            schlumpf.setIstZombie(false);
+            zombieSchluempfe.remove(schlumpf);
+            System.out.println("Doc heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
+        }
+        if (schlumpf.getAktuellesFeld() == fliege.getAktuellesFeld()
+                && !schlumpf.isIstZombie()
+                && schlumpf.getAktuellesFeld() != 24) {
+            schlumpf.setIstZombie(true);
+            zombieSchluempfe.add(schlumpf);
+            System.out.println("Die Fliege beißt Schlumpf " + figurName + ". Er ist nun ein Zombie.");
+        }
+        if (schlumpf.getAktuellesFeld() == schlumpfine.getAktuellesFeld()
+                && schlumpf.isIstZombie()
+                && schlumpf.getAktuellesFeld() != 24) {
+            schlumpf.setIstZombie(false);
+            zombieSchluempfe.remove(schlumpf);
+            System.out.println("Die Schlumpfine heilt Schlumpf " + figurName + ". Er ist nun kein Zombie mehr.");
+        }
+        for (Schlumpf schlumpf2 : zombieSchluempfe) {
+            if (schlumpf.getAktuellesFeld() == schlumpf2.getAktuellesFeld()) {
+                schlumpf.setIstZombie(true);
+            }
+        }
+        System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
     }
 
     public void fliegeBewegung(int augenzahl, Richtung richtung) {
@@ -363,6 +394,11 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
         }
 
+        fliegeUngueltigeEndposition(ursprungsfeld);
+        System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
+    }
+
+    private void fliegeUngueltigeEndposition(int ursprungsfeld) {
         if (fliege.getAktuellesFeld() == doc.getAktuellesFeld()) {
             System.out.println("Bzz bleibt nicht auf Docs Labor.");
             fliege.setAktuellesFeld(ursprungsfeld);
@@ -387,7 +423,6 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 }
             }
         }
-        System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
     }
 
 
@@ -430,7 +465,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                             if (schlumpfine.getAktuellesFeld() == schlumpf.getAktuellesFeld() && schlumpf.isIstZombie()) {
                                 schlumpf.setIstZombie(false);
                                 zombieSchluempfe.remove(schlumpf);
-                                System.out.println("Die Schlumpfine heilt Schlumpf " + schlumpf.getName() + ". Er ist nun kein Zombie mehr.");
+                                System.out.println("Die Schlumpfine heilt Schlumpf " + schlumpf.getName() + ". " +
+                                        "Er ist nun kein Zombie mehr.");
                             }
                         }
                     }
@@ -448,7 +484,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
 
     @Override
-    public int getFeldnummer(String figurName) { // TODO: 02.05.2020 schlumpfine hinzufügen 
+    public int getFeldnummer(String figurName) {
         for (Spieler spieler : spielerListe) {
             for (Schlumpf schlumpf : spieler.getSchlumpfListe()) {
                 if (schlumpf.getName().equals(figurName)) {
@@ -543,7 +579,7 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         return spielerListe;
     }
 
-    private void spielerHinzufügen(Farbe... farben) throws FalscheSpielerzahlException,WiederholteFarbenException {
+    private void spielerHinzufuegen(Farbe... farben) throws FalscheSpielerzahlException, WiederholteFarbenException {
         int playerCounter = 0;
         boolean istWiederholteFarbe = false;
         for (Farbe farbe : farben) {
