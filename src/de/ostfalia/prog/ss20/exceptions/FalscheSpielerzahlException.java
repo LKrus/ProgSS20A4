@@ -8,6 +8,6 @@ public class FalscheSpielerzahlException extends Exception {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Die Spieleranzahl liegt nicht im Bereich 1 bis 4 (beide inklusive).";
     }
 }

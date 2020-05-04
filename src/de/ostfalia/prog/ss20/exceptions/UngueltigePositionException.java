@@ -8,6 +8,6 @@ public class UngueltigePositionException extends RuntimeException {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Eine ungültige Position für eine der Figuren wurde übergeben.";
     }
 }
