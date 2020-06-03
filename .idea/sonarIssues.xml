@@ -158,6 +158,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/de/ostfalia/prog/ss20/test/Aufgabe4Test.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Zug/src/de/ostfalia/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Zug/src/de/ostfalia/Train.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Zug/src/de/ostfalia/Zug.java">
+          <value>
+            <set />
+          </value>
+        </entry>
       </map>
     </option>
   </component>

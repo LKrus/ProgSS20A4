@@ -258,9 +258,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                     boolean ursprungsObIstZombie = schlumpf.isIstZombie();
 
                     if (schlumpf.getAktuellesFeld() == 36) {
-                        System.out.println("Schlumpf " + figurName + " ist bereits im Dorf und kann nicht mehr bewegt werden.");
-                        zugBeenden();
-                        return true;
+//                        System.out.println("Schlumpf " + figurName + " ist bereits im Dorf und kann nicht mehr bewegt werden.");
+                        throw new UngueltigePositionException("Schlumpf " + figurName + " ist bereits im Dorf und kann nicht mehr bewegt werden.");
                     }
                     for (int i = 1; i <= augenzahl; i++) {
                         //überprüfen ob abzweigung
@@ -275,24 +274,18 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                         }
                         //zombieschlumpf darf nicht ins ziel
                         else if (schlumpf.isIstZombie() && schlumpf.getAktuellesFeld() == 36) {
-                            System.out.println("Ein Zombieschlumpf darf nicht ins Dorf.");
                             schlumpf.setAktuellesFeld(ursprungsFeld);
                             schlumpf.setIstZombie(ursprungsObIstZombie);
-                            System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
-                            zugBeenden();
-                            return true;
+                            throw new UngueltigePositionException("Ein Zombieschlumpf darf nicht ins Dorf.");
                         }
 
                         //gucken ob letztes feld flussfeld ist
                         if (i == augenzahl && (schlumpf.getAktuellesFeld() == 16 || schlumpf.getAktuellesFeld() == 17
                                 || schlumpf.getAktuellesFeld() == 25 || schlumpf.getAktuellesFeld() == 26
                                 || schlumpf.getAktuellesFeld() == 27)) {
-                            System.out.println("Der Schlumpf kann nicht auf einem Flussfeld stehen bleiben.");
                             schlumpf.setAktuellesFeld(ursprungsFeld);
                             schlumpf.setIstZombie(ursprungsObIstZombie);
-                            System.out.println(figurName + " ist nun auf Feld " + schlumpf.getAktuellesFeld() + ".");
-                            zugBeenden();
-                            return true;
+                            throw new UngueltigePositionException("Der Schlumpf kann nicht auf einem Flussfeld stehen bleiben.");
                         }
                         //wenn letztes feld pilzfeld ist
                         if (i == augenzahl && schlumpf.getAktuellesFeld() == 24 && schlumpf.isIstZombie()) {
@@ -379,10 +372,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
                 } else if (fliege.getAktuellesFeld()==3){
                     fliege.setAktuellesFeld(8);
                 }else if (fliege.getAktuellesFeld()==31){
-                    System.out.println("Die Fliege darf nicht ins Dorf.");
                     fliege.setAktuellesFeld(ursprungsfeld);
-                    System.out.println(fliege.getName() + " ist nun auf Feld " + fliege.getAktuellesFeld() + ".");
-                    zugBeenden();
+                    throw new UngueltigePositionException("Die Fliege darf nicht ins Dorf.");
                 }
 
             } else if (fliege.getAktuellesFeld() == 7) {
@@ -400,14 +391,14 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
 
     private void fliegeUngueltigeEndposition(int ursprungsfeld) {
         if (fliege.getAktuellesFeld() == doc.getAktuellesFeld()) {
-            System.out.println("Bzz bleibt nicht auf Docs Labor.");
             fliege.setAktuellesFeld(ursprungsfeld);
+            throw new UngueltigePositionException("Bzz bleibt nicht auf Docs Labor.");
         }else if(fliege.getAktuellesFeld()==11){
-            System.out.println("Fliege bleibt nicht auf Blütenstaubfeld.");
             fliege.setAktuellesFeld(ursprungsfeld);
+            throw new UngueltigePositionException("Fliege bleibt nicht auf Blütenstaubfeld.");
         }else if (fliege.getAktuellesFeld()==schlumpfine.getAktuellesFeld()){
-            System.out.println("Fliege bleibt nicht auf Feld der Schlumpfine.");
             fliege.setAktuellesFeld(ursprungsfeld);
+            throw new UngueltigePositionException("Fliege bleibt nicht auf Feld der Schlumpfine.");
         }else {
 
             // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
@@ -454,8 +445,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
             }
 
             if (schlumpfine.getAktuellesFeld()==fliege.getAktuellesFeld()){
-                System.out.println("Schlumpfine kann Feld der Fliege nicht betreten.");
                 schlumpfine.setAktuellesFeld(ursprungsFeld);
+                throw new UngueltigePositionException("Schlumpfine kann Feld der Fliege nicht betreten.");
             }else {
 
                 // ggf statusveränderungen anpassen wenn auf feld ein zombie ist:
