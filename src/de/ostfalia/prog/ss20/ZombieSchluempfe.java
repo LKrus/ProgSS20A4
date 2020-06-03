@@ -616,4 +616,8 @@ public class ZombieSchluempfe implements IZombieSchluempfe {
         }
     }
 
+    public static void laden(String dateiName){
+
+    }
+
 }

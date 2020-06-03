@@ -34,7 +34,7 @@ import de.ostfalia.junit.runner.TopologicalSortRunner;
 import de.ostfalia.prog.ss20.ZombieSchluempfe;
 import de.ostfalia.prog.ss20.enums.Farbe;
 import de.ostfalia.prog.ss20.interfaces.IZombieSchluempfe;
-import de.ostfalia.prog.ss20.interfacesISpeicherbar;
+import de.ostfalia.prog.ss20.interfaces.ISpeicherbar;
 
 /**
  *
